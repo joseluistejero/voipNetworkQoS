@@ -7,8 +7,9 @@ Created on Wed Nov 10 12:28:44 2021
 """
 import math
 import erlangB as erlangB
+import pandas as pd
 
-codecInfo1 = {
+codecInfo = {
         "G711": {
             "CSS": 80, 
             "CSI": 10, 
@@ -36,7 +37,7 @@ codecInfo1 = {
             "CSI": 30, 
             "MOS":3.9, 
             "VPS":24, 
-            "VPSb":30, 
+            "VPSs":30, 
             "PPS":33.3,
             "BWmp":18.9,
             "BWcRTP":8.8,
@@ -47,7 +48,7 @@ codecInfo1 = {
             "CSI": 30, 
             "MOS":3.8, 
             "VPS":20, 
-            "VPSb":30, 
+            "VPSs":30, 
             "PPS":33.3,
             "BWmp":17.9,
             "BWcRTP":7.7,
@@ -58,7 +59,7 @@ codecInfo1 = {
             "CSI": 5, 
             "MOS":3.5, 
             "VPS":80, 
-            "VPSb":20, 
+            "VPSs":20, 
             "PPS":50,
             "BWmp":50.8,
             "BWcRTP":35.6,
@@ -69,7 +70,7 @@ codecInfo1 = {
             "CSI": 5, 
             "MOS":3.61, 
             "VPS":60, 
-            "VPSb":30, 
+            "VPSs":30, 
             "PPS":33.3,
             "BWmp":28.5,
             "BWcRTP":18.4,
@@ -80,7 +81,7 @@ codecInfo1 = {
             "CSI": 10, 
             "MOS":4.13, 
             "VPS":160, 
-            "VPSb":20, 
+            "VPSs":20, 
             "PPS":50,
             "BWmp":82.8,
             "BWcRTP":67.6,
@@ -109,62 +110,85 @@ Tuneles = {
     }
 
 #IMPRIME TODOS LOS CODECS Y SUS VALORES
-for id, info in codecInfo1.items():
+for id, info in codecInfo.items():
     print("\nCodec ID:", id)
     for key in info:
             print(key + ':', info[key])
             
             
 validCodec = []
+resultValues={}
 #BUSCA LOS CODECS VALIDOS DADO UN MOS
-for id, info in codecInfo1.items():
+for id, info in codecInfo.items():
     if info["MOS"] > 4:
-        validCodec.append(id)    
+        validCodec.append(id) #Añadimos al vector cada uno de los codecs validos 
+        #Para cada codec correcto creo un diccionario con los valores que tomará todo lo que calculemos
+        resultValues.update(
+           {id:{
+                     "Rt":"",
+                     "BHT":"",
+                     "Nll":"",
+                     "BWll":"",
+                     "BWst":""
+                  }  
+            } 
+         )
         
 print("\nVALID CODEC", validCodec)   
-
-Ro=codecInfo1["G711"]["VPSs"]+0.1*codecInfo1["G711"]["CSI"]
-Rr=75;
-Rd=0.1*codecInfo1["G711"]["CSI"]*codecInfo1["G711"]["VPSs"]/codecInfo1["G711"]["CSI"]
-
-RjitterMin=1.5*30
-RjitterMax=2*30
-minJitter=math.ceil(RjitterMin/codecInfo1["G711"]["VPSs"])*codecInfo1["G711"]["VPSs"]
-maxJitter=math.floor(RjitterMax/codecInfo1["G711"]["VPSs"])*codecInfo1["G711"]["VPSs"]
+print(resultValues)
 
 
-Rt=Ro+Rr+Rd+minJitter
 
-print("Retardo total", Rt)
+stringResults=[]
 
-Nc=150
-Nl=20
-Tpll=3
-BHT=Nc*Nl*Tpll/60
-print("Tráfico hora cargada (Erlangs)", Rt)
+#Get Delay from all valid codecs
+for i in validCodec:
+   Ro=codecInfo[i]["VPSs"]+0.1*codecInfo[i]["CSI"]
+   Rr=75;
+   Rd=0.1*codecInfo[i]["CSI"]*codecInfo[i]["VPSs"]/codecInfo[i]["CSI"]
+   RjitterMin=1.5*30
+   RjitterMax=2*30
+   minJitter=math.ceil(RjitterMin/codecInfo[i]["VPSs"])*codecInfo[i]["VPSs"]
+   maxJitter=math.floor(RjitterMax/codecInfo[i]["VPSs"])*codecInfo[i]["VPSs"]
+   Rt=Ro+Rr+Rd+minJitter
+   print("Retardo total for CODEC "+  i + " :" + str(Rt))
+   resultValues[i]["Rt"]=Rt
 
+   Nc=150
+   Nl=20
+   Tpll=3
+   BHT=Nc*Nl*Tpll/60
+   print("Tráfico hora cargada (Erlangs)", BHT)
+   resultValues[i]["BHT"]=BHT
 
-Nll=erlangB.lines(BHT,0.03)
-print("Number of calls ", Nll)
+   Nll=erlangB.lines(BHT,0.03)
+   print("Number of calls ", Nll)
+   resultValues[i]["Nll"]=Nll
+   #CALCULO DEL ANCHO DE BANDA PARA RTP
+   TRAMAS_VOZ = 4
+   BWres = 0.1 #Esto se llama en la funcion
+   Lcabecera = Enlace["ETHERNET8021Q"] + Enlace["PPP"] + Transporte_Red["IP"] + Transporte_Red["UDP"] + Transporte_Red["RTP"] + TRAMAS_VOZ
+   Lpaquete = (Lcabecera + codecInfo["G711"]["VPS"]) * 8
+   BWLL = Lpaquete * codecInfo["G711"]["PPS"]
+   BWst = 160 * BWLL * (1 + BWres)
+   print("\nAncho de banda de llamada:", BWLL)
+   print("Ancho de banda SIPTRUNK", BWst)
 
-#CALCULO DEL ANCHO DE BANDA PARA RTP
-TRAMAS_VOZ = 4
-BWres = 0.1 #Esto se llama en la funcion
-Lcabecera = Enlace["ETHERNET8021Q"] + Enlace["PPP"] + Transporte_Red["IP"] + Transporte_Red["UDP"] + Transporte_Red["RTP"] + TRAMAS_VOZ
-Lpaquete = (Lcabecera + codecInfo1["G711"]["VPS"]) * 8
-BWLL = Lpaquete * codecInfo1["G711"]["PPS"]
-BWst = 160 * BWLL * (1 + BWres)
-print("\nAncho de banda de llamada:", BWLL)
-print("Ancho de banda SIPTRUNK", BWst)
+   #CALCULO DEL ANCHO DE BANDA PARA cRTP
+   COMPRIMIDO = 4
+   Lcabecera = Enlace["ETHERNET8021Q"] + Enlace["PPP"] + COMPRIMIDO + TRAMAS_VOZ
+   Lpaquete = (Lcabecera + codecInfo["G711"]["VPS"]) * 8
+   BWLL = Lpaquete * codecInfo["G711"]["PPS"]
+   BWst = 160 * BWLL * (1 + BWres)
+   print("\nAncho de banda de llamada comprimido:", BWLL)
+   print("Ancho de banda SIPTRUNK comprimido", BWst)
 
-#CALCULO DEL ANCHO DE BANDA PARA RTP
-COMPRIMIDO = 4
-Lcabecera = Enlace["ETHERNET8021Q"] + Enlace["PPP"] + COMPRIMIDO + TRAMAS_VOZ
-Lpaquete = (Lcabecera + codecInfo1["G711"]["VPS"]) * 8
-BWLL = Lpaquete * codecInfo1["G711"]["PPS"]
-BWst = 160 * BWLL * (1 + BWres)
-print("\nAncho de banda de llamada comprimido:", BWLL)
-print("Ancho de banda SIPTRUNK comprimido", BWst)
+   resultValues[i]["BWll"]=BWLL
+   resultValues[i]["BWst"]=BWst
+   stringResults.append([ i, codecInfo[i]["MOS"], (resultValues[i]["Rt"]), (resultValues[i]["BHT"]), (resultValues[i]["Nll"]), (resultValues[i]["BWll"]), (resultValues[i]["BWst"]) ]) 
+
+stringTable = pd.DataFrame(stringResults, columns = ['CODEC','MOS', "RT", "BHT", "Nll", "BWll", "BWst"])
+print(stringTable)
 
 
 
