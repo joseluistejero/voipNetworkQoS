@@ -125,7 +125,7 @@
         <x>0</x>
         <y>0</y>
         <width>691</width>
-        <height>191</height>
+        <height>224</height>
        </rect>
       </property>
       <layout class="QFormLayout" name="formLayout">
@@ -146,6 +146,9 @@
         <widget class="QSpinBox" name="iNC">
          <property name="enabled">
           <bool>true</bool>
+         </property>
+         <property name="maximum">
+          <number>1000</number>
          </property>
         </widget>
        </item>
@@ -208,12 +211,8 @@
          <property name="enabled">
           <bool>true</bool>
          </property>
-        </widget>
-       </item>
-       <item row="6" column="1">
-        <widget class="QSpinBox" name="spinBox_2">
-         <property name="enabled">
-          <bool>true</bool>
+         <property name="maximum">
+          <number>1000</number>
          </property>
         </widget>
        </item>
@@ -226,6 +225,22 @@
        </item>
        <item row="5" column="1">
         <widget class="QDoubleSpinBox" name="doubleSpinBox">
+         <property name="maximum">
+          <double>1.000000000000000</double>
+         </property>
+         <property name="singleStep">
+          <double>0.010000000000000</double>
+         </property>
+        </widget>
+       </item>
+       <item row="6" column="1">
+        <widget class="QDoubleSpinBox" name="doubleSpinBox_2">
+         <property name="enabled">
+          <bool>true</bool>
+         </property>
+         <property name="inputMethodHints">
+          <set>Qt::ImhFormattedNumbersOnly</set>
+         </property>
          <property name="maximum">
           <double>1.000000000000000</double>
          </property>
@@ -426,7 +441,7 @@
      <x>0</x>
      <y>0</y>
      <width>838</width>
-     <height>26</height>
+     <height>24</height>
     </rect>
    </property>
   </widget>
