@@ -1,0 +1,437 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>838</width>
+    <height>772</height>
+   </rect>
+  </property>
+  <property name="mouseTracking">
+   <bool>false</bool>
+  </property>
+  <property name="windowTitle">
+   <string>MainWindow</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <widget class="QProgressBar" name="progressBar">
+    <property name="enabled">
+     <bool>true</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>530</y>
+      <width>791</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="value">
+     <number>24</number>
+    </property>
+   </widget>
+   <widget class="QGroupBox" name="gbTopologia">
+    <property name="enabled">
+     <bool>true</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>290</y>
+      <width>751</width>
+      <height>171</height>
+     </rect>
+    </property>
+    <property name="title">
+     <string>Topología</string>
+    </property>
+    <widget class="QComboBox" name="iCodecs">
+     <property name="enabled">
+      <bool>true</bool>
+     </property>
+     <property name="geometry">
+      <rect>
+       <x>280</x>
+       <y>10</y>
+       <width>171</width>
+       <height>22</height>
+      </rect>
+     </property>
+     <item>
+      <property name="text">
+       <string>G711</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>G729</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>G723.1(6.3)</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>G723.1(5.3)</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>G726(32)</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>G728</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>G722_64k</string>
+      </property>
+     </item>
+    </widget>
+   </widget>
+   <widget class="QTabWidget" name="casdaed">
+    <property name="enabled">
+     <bool>true</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>40</y>
+      <width>751</width>
+      <height>231</height>
+     </rect>
+    </property>
+    <property name="currentIndex">
+     <number>0</number>
+    </property>
+    <widget class="QWidget" name="tab">
+     <attribute name="title">
+      <string>Llamadas</string>
+     </attribute>
+     <widget class="QWidget" name="formLayoutWidget">
+      <property name="enabled">
+       <bool>true</bool>
+      </property>
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>0</y>
+        <width>691</width>
+        <height>191</height>
+       </rect>
+      </property>
+      <layout class="QFormLayout" name="formLayout">
+       <item row="1" column="0">
+        <widget class="QLabel" name="lNC">
+         <property name="enabled">
+          <bool>true</bool>
+         </property>
+         <property name="text">
+          <string>Número de clientes:</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="1">
+        <widget class="QSpinBox" name="iNC">
+         <property name="enabled">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="0">
+        <widget class="QLabel" name="label">
+         <property name="enabled">
+          <bool>true</bool>
+         </property>
+         <property name="text">
+          <string>Número de llamadas</string>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="0">
+        <widget class="QLabel" name="label_2">
+         <property name="enabled">
+          <bool>true</bool>
+         </property>
+         <property name="text">
+          <string>Tiempo medio de llamada</string>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="1">
+        <widget class="QSpinBox" name="spinBox">
+         <property name="enabled">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="5" column="0">
+        <widget class="QLabel" name="label_3">
+         <property name="enabled">
+          <bool>true</bool>
+         </property>
+         <property name="text">
+          <string>Probabilidad de llamada</string>
+         </property>
+        </widget>
+       </item>
+       <item row="6" column="0">
+        <widget class="QLabel" name="label_4">
+         <property name="enabled">
+          <bool>true</bool>
+         </property>
+         <property name="text">
+          <string>Ancho de banda (BWres)</string>
+         </property>
+        </widget>
+       </item>
+       <item row="7" column="0">
+        <widget class="QLabel" name="label_6">
+         <property name="text">
+          <string>Encapsulación</string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="1">
+        <widget class="QSpinBox" name="iNC_2">
+         <property name="enabled">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="6" column="1">
+        <widget class="QSpinBox" name="spinBox_2">
+         <property name="enabled">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="7" column="1">
+        <widget class="QComboBox" name="comboBox">
+         <property name="enabled">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="5" column="1">
+        <widget class="QDoubleSpinBox" name="doubleSpinBox">
+         <property name="maximum">
+          <double>1.000000000000000</double>
+         </property>
+         <property name="singleStep">
+          <double>0.010000000000000</double>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </widget>
+    <widget class="QWidget" name="tab_2">
+     <attribute name="title">
+      <string>QoE</string>
+     </attribute>
+     <widget class="QComboBox" name="comboBox_2">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>40</y>
+        <width>341</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <item>
+       <property name="text">
+        <string>Excelente</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Buena</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Aceptable</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Pobre</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Mala</string>
+       </property>
+      </item>
+     </widget>
+     <widget class="QLabel" name="label_5">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>10</y>
+        <width>55</width>
+        <height>16</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>MOS</string>
+      </property>
+     </widget>
+    </widget>
+    <widget class="QWidget" name="tab_3">
+     <attribute name="title">
+      <string>QoS</string>
+     </attribute>
+     <widget class="QWidget" name="formLayoutWidget_2">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>10</y>
+        <width>741</width>
+        <height>204</height>
+       </rect>
+      </property>
+      <layout class="QFormLayout" name="formLayout_2">
+       <property name="verticalSpacing">
+        <number>20</number>
+       </property>
+       <property name="topMargin">
+        <number>5</number>
+       </property>
+       <property name="bottomMargin">
+        <number>5</number>
+       </property>
+       <item row="0" column="0">
+        <widget class="QLabel" name="label_7">
+         <property name="text">
+          <string>Retardo total </string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="1">
+        <widget class="QLineEdit" name="lineEdit"/>
+       </item>
+       <item row="1" column="0">
+        <widget class="QLabel" name="label_8">
+         <property name="text">
+          <string>Retardo de red</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="1">
+        <widget class="QLineEdit" name="lineEdit_2"/>
+       </item>
+       <item row="2" column="0">
+        <widget class="QLabel" name="label_9">
+         <property name="text">
+          <string>Jitter total</string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="1">
+        <widget class="QLineEdit" name="lineEdit_3"/>
+       </item>
+       <item row="3" column="1">
+        <widget class="QCheckBox" name="checkBox_3">
+         <property name="text">
+          <string>cRTP</string>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="0">
+        <widget class="QCheckBox" name="checkBox_2">
+         <property name="text">
+          <string>RTP</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </widget>
+    <widget class="QWidget" name="tab_4">
+     <attribute name="title">
+      <string>GoS</string>
+     </attribute>
+    </widget>
+    <widget class="QWidget" name="tab_5">
+     <attribute name="title">
+      <string>Ancho de banda</string>
+     </attribute>
+    </widget>
+   </widget>
+   <widget class="QPushButton" name="pbCalcular">
+    <property name="enabled">
+     <bool>true</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>30</x>
+      <y>630</y>
+      <width>211</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Calcular</string>
+    </property>
+   </widget>
+   <widget class="QRadioButton" name="radioButton">
+    <property name="enabled">
+     <bool>true</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>420</x>
+      <y>620</y>
+      <width>82</width>
+      <height>17</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>RadioButton</string>
+    </property>
+   </widget>
+   <widget class="QCheckBox" name="checkBox">
+    <property name="enabled">
+     <bool>true</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>110</x>
+      <y>460</y>
+      <width>70</width>
+      <height>17</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>CheckBox</string>
+    </property>
+   </widget>
+  </widget>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>838</width>
+     <height>26</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
