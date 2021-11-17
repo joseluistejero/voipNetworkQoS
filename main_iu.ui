@@ -97,7 +97,7 @@
      </item>
     </widget>
    </widget>
-   <widget class="QTabWidget" name="casdaed">
+   <widget class="QTabWidget" name="tabMenu">
     <property name="enabled">
      <bool>true</bool>
     </property>

@@ -17,16 +17,16 @@ class MainWindows(QtWidgets.QMainWindow, Ui_MainWindow):
     def __init__(self, *args, **kwargs):
         QtWidgets.QMainWindow.__init__(self, *args, **kwargs)
         self.setupUi(self)
-        self.casdaed.setCurrentIndex(0)
+        self.tabMenu.setCurrentIndex(0)
         self.pbCalcular.clicked.connect(self.goToSecondPage)
 
     def goToSecondPage(self):
-        self.casdaed.setCurrentIndex(1)
+        self.tabMenu.setCurrentIndex(1)
         self.progressBar.setValue(50)
         self.pbCalcular.clicked.connect(self.goToThirdPage)
         
     def goToThirdPage(self):
-        self.casdaed.setCurrentIndex(2)
+        self.tabMenu.setCurrentIndex(2)
         self.progressBar.setValue(75)
         self.pbCalcular.setText("Calcular")
         self.pbCalcular.clicked.connect(self.calcular)    
