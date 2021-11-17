@@ -5,12 +5,16 @@ import calculateCodec
 
 class ResultsWindow(QtWidgets.QMainWindow, Ui_VentanaWindow):
 
-    def __init__(self, *args, **kwargs):
-        QtWidgets.QMainWindow.__init__(self, *args, **kwargs)
+    def __init__(self, result):
+        QtWidgets.QMainWindow.__init__(self)
         self.setupUi(self)
+        self.tableWidget.setRowCount(len(result))
+        for i in range(len(result)):
+            for j in range(len(result[i])):
+                newitem = QtWidgets.QTableWidgetItem(str(result[i][j]))
+                self.tableWidget.setItem(i, j, newitem)
 
-        self.lPruebas.setText("Aqui 2")
-        self.pbCalcular.setText("Hacer cosas2")
+    
 
 
 class MainWindows(QtWidgets.QMainWindow, Ui_MainWindow):
@@ -36,6 +40,9 @@ class MainWindows(QtWidgets.QMainWindow, Ui_MainWindow):
         Nll=self.Nll.value();
         Tpll=self.Tpll.value();
         Pll=self.Pll.value();
+        ETH=self.ETH.currentText();
+        ENC=self.ENC.currentText();
+        TUN=self.TUN.currentText();
         BWres=self.BWres.value();
         Rr=self.Rr.value();
         jitterMin=self.minJitter.value();
@@ -53,13 +60,10 @@ class MainWindows(QtWidgets.QMainWindow, Ui_MainWindow):
             mos=1
         else :
             mos=0
-        #self.lPruebas.setText("Pos sa acabó")
-        #self.tabWidget.setEnabled(1)
-        #self.w = ResultsWindow()
-        #self.w.show()
-        #self.hide()
-        calculateCodec.calculateCodec(mos, Rr, jitterMin, jitterMax, Nc, Nll, Tpll, Pll, BWres)
-
+        stringTable=calculateCodec.calculateCodec(mos, Rr, jitterMin, jitterMax, Nc, Nll, Tpll, Pll, BWres, ETH, ENC)
+        self.w = ResultsWindow(stringTable)
+        self.w.show()
+        self.hide()
         
 
 
