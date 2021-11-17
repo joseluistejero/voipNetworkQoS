@@ -185,11 +185,13 @@ def calculateCodec(minimunMos, Rr, jitterMin, jitterMax, Nc, Nl, Tpll, Pll, BWre
        resultValues[i]["BWst"]=BWst
        stringResults.append([ i, codecInfo[i]["MOS"], (resultValues[i]["Rt"]), (resultValues[i]["BHT"]), (resultValues[i]["Nll"]), (resultValues[i]["BWll"]), (resultValues[i]["BWst"]) ]) 
     
-    stringTable = pd.DataFrame(stringResults, columns = ['CODEC','MOS', "RT", "BHT", "Nll", "BWll", "BWst"])
-    print(stringTable)
+    #stringTable = pd.DataFrame(stringResults, columns = ['CODEC','MOS', "RT", "BHT", "Nll", "BWll", "BWst"])
+    return stringResults
 
 def main():
-    calculateCodec(4,75,1.5,2,150,20,3, 0.03, 0.1,"ETHERNET8021Q","PPP")
+    result=calculateCodec(4,75,1.5,2,150,20,3, 0.03, 0.1,"ETHERNET8021Q","PPP")
+    print(result)
 
 if __name__ == '__main__':
     main()
+    
