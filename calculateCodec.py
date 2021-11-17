@@ -112,10 +112,10 @@ def calculateCodec(minimunMos, Rr, jitterMin, jitterMax, Nc, Nl, Tpll, Pll, BWre
         }
     
     #IMPRIME TODOS LOS CODECS Y SUS VALORES
-    for id, info in codecInfo.items():
-        print("\nCodec ID:", id)
-        for key in info:
-                print(key + ':', info[key])
+    #for id, info in codecInfo.items():
+    #    print("\nCodec ID:", id)
+    #    for key in info:
+    #           print(key + ':', info[key])
                 
                 
     validCodec = []

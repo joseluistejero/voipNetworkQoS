@@ -17,28 +17,48 @@ class MainWindows(QtWidgets.QMainWindow, Ui_MainWindow):
     def __init__(self, *args, **kwargs):
         QtWidgets.QMainWindow.__init__(self, *args, **kwargs)
         self.setupUi(self)
+        self.casdaed.setCurrentIndex(0)
+        self.pbCalcular.clicked.connect(self.goToSecondPage)
 
-        #self.lPruebas.setText("Aquí con mis cosas")
-        self.pbCalcular.setText("Siguiente paso")
-        self.pbCalcular.clicked.connect(self.siguientePaso)
+    def goToSecondPage(self):
+        self.casdaed.setCurrentIndex(1)
+        self.progressBar.setValue(50)
+        self.pbCalcular.clicked.connect(self.goToThirdPage)
+        
+    def goToThirdPage(self):
+        self.casdaed.setCurrentIndex(2)
+        self.progressBar.setValue(75)
+        self.pbCalcular.setText("Calcular")
+        self.pbCalcular.clicked.connect(self.calcular)    
 
-    def siguientePaso(self):
-        Nc=self.iNC.value();
-        Nl=self.iNC_2.value();
-        Tpll=self.spinBox.value();
-        Pll=self.doubleSpinBox.value();
-        BWres=self.doubleSpinBox_2.value();
+    def calcular(self):
+        Nc=self.Nc.value();
+        Nll=self.Nll.value();
+        Tpll=self.Tpll.value();
+        Pll=self.Pll.value();
+        BWres=self.BWres.value();
+        Rr=self.Rr.value();
+        jitterMin=self.minJitter.value();
+        jitterMax=self.maxJitter.value();
+        mosString=self.MOS.currentText();
+        if (mosString=="Excelente"):
+            mos=5
+        elif (mosString=="Buena"):
+            mos=4
+        elif (mosString=="Aceptable"):
+            mos=3
+        elif (mosString=="Pobre"):
+            mos=2
+        elif (mosString=="Mala"):
+            mos=1
+        else :
+            mos=0
         #self.lPruebas.setText("Pos sa acabó")
         #self.tabWidget.setEnabled(1)
         #self.w = ResultsWindow()
         #self.w.show()
         #self.hide()
-        calculateCodec.calculateCodec(4, 75, 1.5, 2, Nc, Nl, Tpll, Pll, BWres)
-        
-
-        
-    pass
-
+        calculateCodec.calculateCodec(mos, Rr, jitterMin, jitterMax, Nc, Nll, Tpll, Pll, BWres)
 
         
 
