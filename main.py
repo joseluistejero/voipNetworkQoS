@@ -48,6 +48,8 @@ class MainWindows(QtWidgets.QMainWindow, Ui_MainWindow):
         jitterMin=self.minJitter.value();
         jitterMax=self.maxJitter.value();
         mosString=self.MOS.currentText();
+        TcWan=self.TcWan.currentText();
+        Rto=self.Rt.currentText();
         if (mosString=="Excelente"):
             mos=5
         elif (mosString=="Buena"):
@@ -60,7 +62,13 @@ class MainWindows(QtWidgets.QMainWindow, Ui_MainWindow):
             mos=1
         else :
             mos=0
-        stringTable=calculateCodec.calculateCodec(mos, Rr, jitterMin, jitterMax, Nc, Nll, Tpll, Pll, BWres, ETH, ENC, "RTP")
+        
+        if (Rto=="Aceptable"):
+            Rt=150
+        elif (Rto=="Moderadamente aceptable"):
+            Rt==400
+        
+        stringTable=calculateCodec.calculateCodec(mos, Rr, jitterMin, jitterMax, Nc, Nll, Tpll, Pll, BWres, ETH, ENC, TcWan, Rt)
         self.w = ResultsWindow(stringTable)
         self.w.show()
         self.hide()

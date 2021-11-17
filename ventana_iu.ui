@@ -30,9 +30,9 @@
    <widget class="QTableWidget" name="tableWidget">
     <property name="geometry">
      <rect>
-      <x>60</x>
-      <y>120</y>
-      <width>711</width>
+      <x>10</x>
+      <y>140</y>
+      <width>811</width>
       <height>181</height>
      </rect>
     </property>
@@ -60,11 +60,11 @@
     <attribute name="horizontalHeaderDefaultSectionSize">
      <number>100</number>
     </attribute>
-    <attribute name="verticalHeaderMinimumSectionSize">
-     <number>11</number>
-    </attribute>
     <attribute name="verticalHeaderDefaultSectionSize">
      <number>30</number>
+    </attribute>
+    <attribute name="verticalHeaderMinimumSectionSize">
+     <number>11</number>
     </attribute>
     <column>
      <property name="text">
@@ -101,6 +101,11 @@
       <string>BWst</string>
      </property>
     </column>
+    <column>
+     <property name="text">
+      <string>PaquetesRTP</string>
+     </property>
+    </column>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
@@ -109,7 +114,7 @@
      <x>0</x>
      <y>0</y>
      <width>838</width>
-     <height>22</height>
+     <height>26</height>
     </rect>
    </property>
   </widget>
