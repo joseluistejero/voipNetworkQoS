@@ -10,7 +10,7 @@ import erlangB as erlangB
 import pandas as pd
 
 
-def calculateCodec(minimunMos, Rr, jitterMin, jitterMax, Nc, Nl, Tpll, Pll, BWres, ETH, ENC) :
+def calculateCodec(minimunMos, Rr, jitterMin, jitterMax, Nc, Nl, Tpll, Pb, BWres, ETH, ENC, Tcwan) :
     codecInfo = {
             "G711": {
                 "CSS": 80, 
@@ -155,33 +155,37 @@ def calculateCodec(minimunMos, Rr, jitterMin, jitterMax, Nc, Nl, Tpll, Pll, BWre
        print("Retardo total for CODEC "+  i + " :" + str(Rt))
        resultValues[i]["Rt"]=Rt
     
-
+       #En BHT suponemos probabilidad de llamada del 100%
        BHT=Nc*Nl*Tpll/60
        print("Tráfico hora cargada (Erlangs)", BHT)
        resultValues[i]["BHT"]=BHT
     
-       Nll=erlangB.lines(BHT,Pll)
+       Nll=erlangB.lines(BHT,Pb)
        print("Number of calls ", Nll)
        resultValues[i]["Nll"]=Nll
-       #CALCULO DEL ANCHO DE BANDA PARA RTP
+       
+      #CALCULO DEL ANCHO DE BANDA PARA RTP  
        TRAMAS_VOZ = 4
-       Lcabecera = Enlace[ETH] + Enlace[ENC] + Transporte_Red["IP"] + Transporte_Red["UDP"] + Transporte_Red["RTP"] + TRAMAS_VOZ
-       Lpaquete = (Lcabecera + codecInfo["G711"]["VPS"]) * 8
-       BWLL = Lpaquete * codecInfo["G711"]["PPS"]
-       BWst = 160 * BWLL * (1 + BWres)
-       print("\nAncho de banda de llamada:", BWLL)
-       print("Ancho de banda SIPTRUNK", BWst)
-    
-       #CALCULO DEL ANCHO DE BANDA PARA cRTP
-       COMPRIMIDO = 4
-       Lcabecera = Enlace[ETH] + Enlace[ENC] + COMPRIMIDO + TRAMAS_VOZ
-       Lpaquete = (Lcabecera + codecInfo[i]["VPS"]) * 8
-       BWLL = Lpaquete * codecInfo[i]["PPS"]
-       BWst = 160 * BWLL * (1 + BWres)
-       print("\nAncho de banda de llamada comprimido:", BWLL)
-       print("Ancho de banda SIPTRUNK comprimido", BWst)
-    
-       resultValues[i]["BWll"]=BWLL
+       if (Tcwan == "RTP") :
+             
+             Lcabecera = Enlace[ETH] + Enlace[ENC] + Transporte_Red["IP"] + Transporte_Red["UDP"] + Transporte_Red["RTP"] + TRAMAS_VOZ
+             Lpaquete = (Lcabecera + codecInfo["G711"]["VPS"]) * 8
+             BWll = Lpaquete * codecInfo["G711"]["PPS"]
+             BWst = Nll * BWll * (1 + BWres)
+             print("\nAncho de banda de llamada:", BWll)
+             print("Ancho de banda SIPTRUNK", BWst)
+            #CALCULO DEL ANCHO DE BANDA PARA cRTP   
+       else :
+            #CALCULO DEL ANCHO DE BANDA PARA cRTP
+            COMPRIMIDO = 4
+            Lcabecera = Enlace[ETH] + Enlace[ENC] + COMPRIMIDO + TRAMAS_VOZ
+            Lpaquete = (Lcabecera + codecInfo[i]["VPS"]) * 8
+            BWll = Lpaquete * codecInfo[i]["PPS"]
+            BWst = Nll * BWll * (1 + BWres)
+            print("\nAncho de banda de llamada comprimido:", BWll)
+            print("Ancho de banda SIPTRUNK comprimido", BWst)
+        
+       resultValues[i]["BWll"]=BWll
        resultValues[i]["BWst"]=BWst
        stringResults.append([ i, codecInfo[i]["MOS"], (resultValues[i]["Rt"]), (resultValues[i]["BHT"]), (resultValues[i]["Nll"]), (resultValues[i]["BWll"]), (resultValues[i]["BWst"]) ]) 
     
@@ -189,7 +193,7 @@ def calculateCodec(minimunMos, Rr, jitterMin, jitterMax, Nc, Nl, Tpll, Pll, BWre
     return stringResults
 
 def main():
-    result=calculateCodec(4,75,1.5,2,150,20,3, 0.03, 0.1,"ETHERNET8021Q","PPP")
+    result=calculateCodec(4,75,1.5,2,150,20,3, 0.03, 0.1,"ETHERNET8021Q","PPP", "RTP")
     print(result)
 
 if __name__ == '__main__':

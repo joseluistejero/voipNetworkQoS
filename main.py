@@ -60,7 +60,7 @@ class MainWindows(QtWidgets.QMainWindow, Ui_MainWindow):
             mos=1
         else :
             mos=0
-        stringTable=calculateCodec.calculateCodec(mos, Rr, jitterMin, jitterMax, Nc, Nll, Tpll, Pll, BWres, ETH, ENC)
+        stringTable=calculateCodec.calculateCodec(mos, Rr, jitterMin, jitterMax, Nc, Nll, Tpll, Pll, BWres, ETH, ENC, "RTP")
         self.w = ResultsWindow(stringTable)
         self.w.show()
         self.hide()
