@@ -2,7 +2,6 @@
 # -*- coding: utf-8 -*-
 """
 Created on Wed Nov 10 12:28:44 2021
-
 @author: josel
 """
 import math
@@ -10,7 +9,7 @@ import erlangB as erlangB
 import pandas as pd
 
 
-def calculateCodec(minimunMos, Rr, jitterMin, jitterMax, Nc, Nl, Tpll, Pb, BWres, ETH, ENC, Tcwan) :
+def calculateCodec(minimunMos, Rr, jitterMin, jitterMax, Nc, Nl, Tpll, Pb, BWres, ETH, ENC, Tcwan, Rto) :
     codecInfo = {
             "G711": {
                 "CSS": 80, 
@@ -131,7 +130,8 @@ def calculateCodec(minimunMos, Rr, jitterMin, jitterMax, Nc, Nl, Tpll, Pb, BWres
                          "BHT":"",
                          "Nll":"",
                          "BWll":"",
-                         "BWst":""
+                         "BWst":"",
+                         "NpaquetesRTP":""
                       }  
                 } 
              )
@@ -151,6 +151,9 @@ def calculateCodec(minimunMos, Rr, jitterMin, jitterMax, Nc, Nl, Tpll, Pb, BWres
        RjitterMax=jitterMax*30
        minJitter=math.ceil(RjitterMin/codecInfo[i]["VPSs"])*codecInfo[i]["VPSs"]
        maxJitter=math.floor(RjitterMax/codecInfo[i]["VPSs"])*codecInfo[i]["VPSs"]
+       Rtc=Ro+Rr+Rd
+       Npaquetes=int((Rto-Rtc)/20)
+       resultValues[i]["NpaquetesRTP"]=Npaquetes
        Rt=Ro+Rr+Rd+minJitter
        print("Retardo total for CODEC "+  i + " :" + str(Rt))
        resultValues[i]["Rt"]=Rt
@@ -187,13 +190,13 @@ def calculateCodec(minimunMos, Rr, jitterMin, jitterMax, Nc, Nl, Tpll, Pb, BWres
         
        resultValues[i]["BWll"]=BWll
        resultValues[i]["BWst"]=BWst
-       stringResults.append([ i, codecInfo[i]["MOS"], (resultValues[i]["Rt"]), (resultValues[i]["BHT"]), (resultValues[i]["Nll"]), (resultValues[i]["BWll"]), (resultValues[i]["BWst"]) ]) 
+       stringResults.append([ i, codecInfo[i]["MOS"], (resultValues[i]["Rt"]), (resultValues[i]["BHT"]), (resultValues[i]["Nll"]), (resultValues[i]["BWll"]), (resultValues[i]["BWst"]), (resultValues[i]["NpaquetesRTP"]) ]) 
     
     #stringTable = pd.DataFrame(stringResults, columns = ['CODEC','MOS', "RT", "BHT", "Nll", "BWll", "BWst"])
     return stringResults
 
 def main():
-    result=calculateCodec(4,75,1.5,2,150,20,3, 0.03, 0.1,"ETHERNET8021Q","PPP", "RTP")
+    result=calculateCodec(4,75,1.5,2,150,20,3, 0.03, 0.1,"ETHERNET8021Q","PPP", "RTP",150)
     print(result)
 
 if __name__ == '__main__':

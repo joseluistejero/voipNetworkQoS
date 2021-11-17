@@ -109,8 +109,28 @@
       <height>291</height>
      </rect>
     </property>
+    <property name="font">
+     <font>
+      <underline>false</underline>
+      <strikeout>false</strikeout>
+      <stylestrategy>PreferDefault</stylestrategy>
+      <kerning>false</kerning>
+     </font>
+    </property>
+    <property name="focusPolicy">
+     <enum>Qt::StrongFocus</enum>
+    </property>
+    <property name="contextMenuPolicy">
+     <enum>Qt::NoContextMenu</enum>
+    </property>
+    <property name="accessibleName">
+     <string notr="true"/>
+    </property>
+    <property name="autoFillBackground">
+     <bool>true</bool>
+    </property>
     <property name="currentIndex">
-     <number>1</number>
+     <number>0</number>
     </property>
     <widget class="QWidget" name="tab">
      <attribute name="title">
@@ -165,6 +185,16 @@
          </property>
         </widget>
        </item>
+       <item row="2" column="1">
+        <widget class="QSpinBox" name="Nll">
+         <property name="enabled">
+          <bool>true</bool>
+         </property>
+         <property name="maximum">
+          <number>1000</number>
+         </property>
+        </widget>
+       </item>
        <item row="3" column="0">
         <widget class="QLabel" name="label_2">
          <property name="enabled">
@@ -179,76 +209,6 @@
         <widget class="QSpinBox" name="Tpll">
          <property name="enabled">
           <bool>true</bool>
-         </property>
-        </widget>
-       </item>
-       <item row="5" column="0">
-        <widget class="QLabel" name="label_3">
-         <property name="enabled">
-          <bool>true</bool>
-         </property>
-         <property name="text">
-          <string>Probabilidad de llamada</string>
-         </property>
-        </widget>
-       </item>
-       <item row="6" column="0">
-        <widget class="QLabel" name="label_4">
-         <property name="enabled">
-          <bool>true</bool>
-         </property>
-         <property name="text">
-          <string>Ancho de banda (BWres)</string>
-         </property>
-        </widget>
-       </item>
-       <item row="7" column="0">
-        <widget class="QLabel" name="label_6">
-         <property name="text">
-          <string>Encapsulación</string>
-         </property>
-        </widget>
-       </item>
-       <item row="2" column="1">
-        <widget class="QSpinBox" name="Nll">
-         <property name="enabled">
-          <bool>true</bool>
-         </property>
-         <property name="maximum">
-          <number>1000</number>
-         </property>
-        </widget>
-       </item>
-       <item row="7" column="1">
-        <widget class="QComboBox" name="comboBox">
-         <property name="enabled">
-          <bool>true</bool>
-         </property>
-        </widget>
-       </item>
-       <item row="6" column="1">
-        <widget class="QDoubleSpinBox" name="BWres">
-         <property name="enabled">
-          <bool>true</bool>
-         </property>
-         <property name="inputMethodHints">
-          <set>Qt::ImhFormattedNumbersOnly</set>
-         </property>
-         <property name="maximum">
-          <double>1.000000000000000</double>
-         </property>
-         <property name="singleStep">
-          <double>0.010000000000000</double>
-         </property>
-        </widget>
-       </item>
-       <item row="5" column="1">
-        <widget class="QDoubleSpinBox" name="Pll">
-         <property name="maximum">
-          <double>1.000000000000000</double>
-         </property>
-         <property name="singleStep">
-          <double>0.010000000000000</double>
          </property>
         </widget>
        </item>
@@ -388,15 +348,8 @@
          </property>
         </widget>
        </item>
-       <item row="4" column="0">
-        <widget class="QLabel" name="encapsulacionLabel">
-         <property name="text">
-          <string>Encapsulacion</string>
-         </property>
-        </widget>
-       </item>
        <item row="4" column="1">
-        <widget class="QComboBox" name="MOS_2">
+        <widget class="QComboBox" name="TcWan">
          <property name="editable">
           <bool>false</bool>
          </property>
@@ -428,17 +381,28 @@
          </property>
         </widget>
        </item>
+       <item row="4" column="0">
+        <widget class="QLabel" name="encapsulacionLabel">
+         <property name="text">
+          <string>TcWan</string>
+         </property>
+        </widget>
+       </item>
        <item row="0" column="1">
-        <widget class="QDoubleSpinBox" name="Rt">
-         <property name="decimals">
-          <number>1</number>
+        <widget class="QComboBox" name="Rt">
+         <property name="editable">
+          <bool>false</bool>
          </property>
-         <property name="maximum">
-          <double>1000.000000000000000</double>
-         </property>
-         <property name="singleStep">
-          <double>0.100000000000000</double>
-         </property>
+         <item>
+          <property name="text">
+           <string>Aceptable</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Moderadamente aceptable</string>
+          </property>
+         </item>
         </widget>
        </item>
       </layout>
@@ -574,6 +538,67 @@
      <attribute name="title">
       <string>Ancho de banda</string>
      </attribute>
+     <widget class="QWidget" name="formLayoutWidget_3">
+      <property name="enabled">
+       <bool>true</bool>
+      </property>
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>10</y>
+        <width>691</width>
+        <height>224</height>
+       </rect>
+      </property>
+      <layout class="QFormLayout" name="formLayout_3">
+       <item row="0" column="0">
+        <widget class="QLabel" name="label_15">
+         <property name="enabled">
+          <bool>true</bool>
+         </property>
+         <property name="text">
+          <string>Probabilidad de bloqueo</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="1">
+        <widget class="QDoubleSpinBox" name="Pb">
+         <property name="maximum">
+          <double>1.000000000000000</double>
+         </property>
+         <property name="singleStep">
+          <double>0.010000000000000</double>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="0">
+        <widget class="QLabel" name="label_16">
+         <property name="enabled">
+          <bool>true</bool>
+         </property>
+         <property name="text">
+          <string>Ancho de banda (BWres)</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="1">
+        <widget class="QDoubleSpinBox" name="BWres">
+         <property name="enabled">
+          <bool>true</bool>
+         </property>
+         <property name="inputMethodHints">
+          <set>Qt::ImhFormattedNumbersOnly</set>
+         </property>
+         <property name="maximum">
+          <double>1.000000000000000</double>
+         </property>
+         <property name="singleStep">
+          <double>0.010000000000000</double>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
     </widget>
    </widget>
    <widget class="QPushButton" name="pbCalcular">
@@ -599,7 +624,7 @@
      <x>0</x>
      <y>0</y>
      <width>838</width>
-     <height>26</height>
+     <height>24</height>
     </rect>
    </property>
   </widget>
