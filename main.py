@@ -41,6 +41,9 @@ class MainWindows(QtWidgets.QMainWindow, Ui_MainWindow):
         jitterMin=self.minJitter.value();
         jitterMax=self.maxJitter.value();
         mosString=self.MOS.currentText();
+        ETH=self.ETH.currentText();
+        ENC=self.ENC.currentText();
+        TUN=self.TUN.currentText();
         if (mosString=="Excelente"):
             mos=5
         elif (mosString=="Buena"):
@@ -58,7 +61,7 @@ class MainWindows(QtWidgets.QMainWindow, Ui_MainWindow):
         #self.w = ResultsWindow()
         #self.w.show()
         #self.hide()
-        calculateCodec.calculateCodec(mos, Rr, jitterMin, jitterMax, Nc, Nll, Tpll, Pll, BWres)
+        calculateCodec.calculateCodec(mos, Rr, jitterMin, jitterMax, Nc, Nll, Tpll, Pll, BWres, ETH, ENC)
 
         
 

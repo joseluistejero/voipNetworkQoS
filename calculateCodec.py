@@ -10,7 +10,7 @@ import erlangB as erlangB
 import pandas as pd
 
 
-def calculateCodec(minimunMos, Rr, jitterMin, jitterMax, Nc, Nl, Tpll, Pll, BWres) :
+def calculateCodec(minimunMos, Rr, jitterMin, jitterMax, Nc, Nl, Tpll, Pll, BWres, ETH, ENC) :
     codecInfo = {
             "G711": {
                 "CSS": 80, 
@@ -100,7 +100,7 @@ def calculateCodec(minimunMos, Rr, jitterMin, jitterMax, Nc, Nl, Tpll, Pll, BWre
     Enlace = {
         "ETHERNET":14,
         "ETHERNET8021Q":18,
-        "ETHERNETQ":22,
+        "ETHERNETQinQ":22,
         "PPP":6,
         "PPOE":20
         }
@@ -165,7 +165,7 @@ def calculateCodec(minimunMos, Rr, jitterMin, jitterMax, Nc, Nl, Tpll, Pll, BWre
        resultValues[i]["Nll"]=Nll
        #CALCULO DEL ANCHO DE BANDA PARA RTP
        TRAMAS_VOZ = 4
-       Lcabecera = Enlace["ETHERNET8021Q"] + Enlace["PPP"] + Transporte_Red["IP"] + Transporte_Red["UDP"] + Transporte_Red["RTP"] + TRAMAS_VOZ
+       Lcabecera = Enlace[ETH] + Enlace[ENC] + Transporte_Red["IP"] + Transporte_Red["UDP"] + Transporte_Red["RTP"] + TRAMAS_VOZ
        Lpaquete = (Lcabecera + codecInfo["G711"]["VPS"]) * 8
        BWLL = Lpaquete * codecInfo["G711"]["PPS"]
        BWst = 160 * BWLL * (1 + BWres)
@@ -174,9 +174,9 @@ def calculateCodec(minimunMos, Rr, jitterMin, jitterMax, Nc, Nl, Tpll, Pll, BWre
     
        #CALCULO DEL ANCHO DE BANDA PARA cRTP
        COMPRIMIDO = 4
-       Lcabecera = Enlace["ETHERNET8021Q"] + Enlace["PPP"] + COMPRIMIDO + TRAMAS_VOZ
-       Lpaquete = (Lcabecera + codecInfo["G711"]["VPS"]) * 8
-       BWLL = Lpaquete * codecInfo["G711"]["PPS"]
+       Lcabecera = Enlace[ETH] + Enlace[ENC] + COMPRIMIDO + TRAMAS_VOZ
+       Lpaquete = (Lcabecera + codecInfo[i]["VPS"]) * 8
+       BWLL = Lpaquete * codecInfo[i]["PPS"]
        BWst = 160 * BWLL * (1 + BWres)
        print("\nAncho de banda de llamada comprimido:", BWLL)
        print("Ancho de banda SIPTRUNK comprimido", BWst)
@@ -189,7 +189,7 @@ def calculateCodec(minimunMos, Rr, jitterMin, jitterMax, Nc, Nl, Tpll, Pll, BWre
     print(stringTable)
 
 def main():
-    calculateCodec(4,75,1.5,2,150,20,3, 0.03, 0.1)
+    calculateCodec(4,75,1.5,2,150,20,3, 0.03, 0.1,"ETHERNET8021Q","PPP")
 
 if __name__ == '__main__':
     main()

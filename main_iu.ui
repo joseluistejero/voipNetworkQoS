@@ -110,7 +110,7 @@
      </rect>
     </property>
     <property name="currentIndex">
-     <number>0</number>
+     <number>1</number>
     </property>
     <widget class="QWidget" name="tab">
      <attribute name="title">
@@ -397,6 +397,9 @@
        </item>
        <item row="4" column="1">
         <widget class="QComboBox" name="MOS_2">
+         <property name="editable">
+          <bool>false</bool>
+         </property>
          <item>
           <property name="text">
            <string>RTP</string>
@@ -445,6 +448,127 @@
      <attribute name="title">
       <string>GoS</string>
      </attribute>
+     <widget class="QLabel" name="label_11">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>10</y>
+        <width>78</width>
+        <height>22</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>ETHERNET</string>
+      </property>
+     </widget>
+     <widget class="QComboBox" name="ETH">
+      <property name="enabled">
+       <bool>true</bool>
+      </property>
+      <property name="geometry">
+       <rect>
+        <x>80</x>
+        <y>10</y>
+        <width>646</width>
+        <height>22</height>
+       </rect>
+      </property>
+      <property name="editable">
+       <bool>false</bool>
+      </property>
+      <item>
+       <property name="text">
+        <string>ETHERNET</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>ETHERNET8021Q</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>ETHERNETQinQ</string>
+       </property>
+      </item>
+     </widget>
+     <widget class="QLabel" name="label_12">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>110</y>
+        <width>78</width>
+        <height>22</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>ENLACE</string>
+      </property>
+     </widget>
+     <widget class="QComboBox" name="ENC">
+      <property name="geometry">
+       <rect>
+        <x>80</x>
+        <y>110</y>
+        <width>646</width>
+        <height>22</height>
+       </rect>
+      </property>
+      <property name="editable">
+       <bool>false</bool>
+      </property>
+      <item>
+       <property name="text">
+        <string>PPP</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>PPOE</string>
+       </property>
+      </item>
+     </widget>
+     <widget class="QLabel" name="label_13">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>210</y>
+        <width>78</width>
+        <height>22</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>TÚNELES</string>
+      </property>
+     </widget>
+     <widget class="QComboBox" name="TUN">
+      <property name="geometry">
+       <rect>
+        <x>80</x>
+        <y>210</y>
+        <width>646</width>
+        <height>22</height>
+       </rect>
+      </property>
+      <property name="editable">
+       <bool>false</bool>
+      </property>
+      <item>
+       <property name="text">
+        <string>IPSEC</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>L2TP</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>MPLS</string>
+       </property>
+      </item>
+     </widget>
     </widget>
     <widget class="QWidget" name="tab_5">
      <attribute name="title">
@@ -475,7 +599,7 @@
      <x>0</x>
      <y>0</y>
      <width>838</width>
-     <height>24</height>
+     <height>26</height>
     </rect>
    </property>
   </widget>
