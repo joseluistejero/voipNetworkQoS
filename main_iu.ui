@@ -24,78 +24,14 @@
     <property name="geometry">
      <rect>
       <x>0</x>
-      <y>530</y>
+      <y>390</y>
       <width>791</width>
       <height>23</height>
      </rect>
     </property>
     <property name="value">
-     <number>24</number>
+     <number>0</number>
     </property>
-   </widget>
-   <widget class="QGroupBox" name="gbTopologia">
-    <property name="enabled">
-     <bool>true</bool>
-    </property>
-    <property name="geometry">
-     <rect>
-      <x>30</x>
-      <y>330</y>
-      <width>751</width>
-      <height>171</height>
-     </rect>
-    </property>
-    <property name="title">
-     <string>Topología</string>
-    </property>
-    <widget class="QComboBox" name="iCodecs">
-     <property name="enabled">
-      <bool>true</bool>
-     </property>
-     <property name="geometry">
-      <rect>
-       <x>280</x>
-       <y>10</y>
-       <width>171</width>
-       <height>22</height>
-      </rect>
-     </property>
-     <item>
-      <property name="text">
-       <string>G711</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>G729</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>G723.1(6.3)</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>G723.1(5.3)</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>G726(32)</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>G728</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>G722_64k</string>
-      </property>
-     </item>
-    </widget>
    </widget>
    <widget class="QTabWidget" name="tabMenu">
     <property name="enabled">
@@ -301,6 +237,23 @@
          </property>
         </widget>
        </item>
+       <item row="0" column="1">
+        <widget class="QComboBox" name="Rt">
+         <property name="editable">
+          <bool>false</bool>
+         </property>
+         <item>
+          <property name="text">
+           <string>Aceptable</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Moderadamente aceptable</string>
+          </property>
+         </item>
+        </widget>
+       </item>
        <item row="1" column="0">
         <widget class="QLabel" name="label_8">
          <property name="text">
@@ -322,33 +275,13 @@
         </widget>
        </item>
        <item row="2" column="0">
-        <widget class="QLabel" name="label_9">
+        <widget class="QLabel" name="encapsulacionLabel">
          <property name="text">
-          <string>Jitter min</string>
+          <string>TcWan</string>
          </property>
         </widget>
        </item>
        <item row="2" column="1">
-        <widget class="QDoubleSpinBox" name="minJitter">
-         <property name="minimum">
-          <double>1.000000000000000</double>
-         </property>
-         <property name="maximum">
-          <double>2.000000000000000</double>
-         </property>
-         <property name="singleStep">
-          <double>0.010000000000000</double>
-         </property>
-        </widget>
-       </item>
-       <item row="3" column="0">
-        <widget class="QLabel" name="label_10">
-         <property name="text">
-          <string>Jitter max</string>
-         </property>
-        </widget>
-       </item>
-       <item row="4" column="1">
         <widget class="QComboBox" name="TcWan">
          <property name="editable">
           <bool>false</bool>
@@ -361,46 +294,6 @@
          <item>
           <property name="text">
            <string>cRTP</string>
-          </property>
-         </item>
-        </widget>
-       </item>
-       <item row="3" column="1">
-        <widget class="QDoubleSpinBox" name="maxJitter">
-         <property name="minimum">
-          <double>1.000000000000000</double>
-         </property>
-         <property name="maximum">
-          <double>2.000000000000000</double>
-         </property>
-         <property name="singleStep">
-          <double>0.010000000000000</double>
-         </property>
-         <property name="value">
-          <double>2.000000000000000</double>
-         </property>
-        </widget>
-       </item>
-       <item row="4" column="0">
-        <widget class="QLabel" name="encapsulacionLabel">
-         <property name="text">
-          <string>TcWan</string>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="1">
-        <widget class="QComboBox" name="Rt">
-         <property name="editable">
-          <bool>false</bool>
-         </property>
-         <item>
-          <property name="text">
-           <string>Aceptable</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>Moderadamente aceptable</string>
           </property>
          </item>
         </widget>
@@ -607,8 +500,8 @@
     </property>
     <property name="geometry">
      <rect>
-      <x>320</x>
-      <y>580</y>
+      <x>300</x>
+      <y>450</y>
       <width>211</width>
       <height>41</height>
      </rect>

@@ -8,9 +8,8 @@ import math
 import erlangB as erlangB
 import pandas as pd
 
-
-def calculateCodec(minimunMos, Rr, jitterMin, jitterMax, Nc, Nl, Tpll, Pb, BWres, ETH, ENC, Tcwan, Rto) :
-    codecInfo = {
+class voipCodecs:
+   codecInfo = {
             "G711": {
                 "CSS": 80, 
                 "CSI": 10, 
@@ -89,42 +88,35 @@ def calculateCodec(minimunMos, Rr, jitterMin, jitterMax, Nc, Nl, Tpll, Pb, BWres
                 "BWeth":87.2
             }
     }
-    
-    Transporte_Red = {
+   Transporte_Red = {
         "RTP":12,
         "UDP":8,
         "IP":20
-        }
-    
-    Enlace = {
+   } 
+   Enlace = {
         "ETHERNET":14,
         "ETHERNET8021Q":18,
         "ETHERNETQinQ":22,
         "PPP":6,
         "PPOE":20
-        }
-    
-    Tuneles = {
+   }
+   Tuneles = {
         "IPSEC":50,
         "L2TP":24,
         "MPLS":4   
-        }
-    
-    #IMPRIME TODOS LOS CODECS Y SUS VALORES
-    #for id, info in codecInfo.items():
-    #    print("\nCodec ID:", id)
-    #    for key in info:
-    #           print(key + ':', info[key])
-                
-                
-    validCodec = []
-    resultValues={}
-    #BUSCA LOS CODECS VALIDOS DADO UN MOS
-    for id, info in codecInfo.items():
-        if info["MOS"] > minimunMos:
-            validCodec.append(id) #Añadimos al vector cada uno de los codecs validos 
+   } 
+   TRAMAS_VOZ = 4
+   def __init__(self):
+      self.validCodec = []
+      self.resultValues={}
+      self.stringResults=[]
+
+   def getValidCodec(self):
+      for id, info in self.codecInfo.items():
+         if info["MOS"] > self.minimunMos:
+            self.validCodec.append(id) #Añadimos al vector cada uno de los codecs validos 
             #Para cada codec correcto creo un diccionario con los valores que tomará todo lo que calculemos
-            resultValues.update(
+            self.resultValues.update(
                {id:{
                          "Rt":"",
                          "BHT":"",
@@ -136,69 +128,126 @@ def calculateCodec(minimunMos, Rr, jitterMin, jitterMax, Nc, Nl, Tpll, Pb, BWres
                 } 
              )
             
-    print("\nVALID CODEC", validCodec)   
-    print(resultValues)
-    
-    
-    
-    stringResults=[]
-    
-    #Get Delay from all valid codecs
-    for i in validCodec:
-       Ro=codecInfo[i]["VPSs"]+0.1*codecInfo[i]["CSI"]
-       Rd=0.1*codecInfo[i]["CSI"]*codecInfo[i]["VPSs"]/codecInfo[i]["CSI"]
+      print("\nVALID CODEC", self.validCodec)   
+      print(self.resultValues)
+
+   def getRetardoTotal(self):
+      for i in self.validCodec:
+       Ro=self.codecInfo[i]["VPSs"]+0.1*self.codecInfo[i]["CSI"]
+       Rd=0.1*self.codecInfo[i]["CSI"]*self.codecInfo[i]["VPSs"]/self.codecInfo[i]["CSI"]
+       jitterMax=2
+       jitterMin=1.5
        RjitterMin=jitterMin*30
        RjitterMax=jitterMax*30
-       minJitter=math.ceil(RjitterMin/codecInfo[i]["VPSs"])*codecInfo[i]["VPSs"]
-       maxJitter=math.floor(RjitterMax/codecInfo[i]["VPSs"])*codecInfo[i]["VPSs"]
-       Rtc=Ro+Rr+Rd
-       Npaquetes=int((Rto-Rtc)/20)
-       resultValues[i]["NpaquetesRTP"]=Npaquetes
-       Rt=Ro+Rr+Rd+minJitter
+       minJitter=math.ceil(RjitterMin/self.codecInfo[i]["VPSs"])*self.codecInfo[i]["VPSs"]
+       maxJitter=math.floor(RjitterMax/self.codecInfo[i]["VPSs"])*self.codecInfo[i]["VPSs"]
+       Rtc=Ro+self.Rr+Rd
+       Npaquetes=int((self.Rto-Rtc)/20)
+       self.resultValues[i]["NpaquetesRTP"]=Npaquetes
+       Rt=Ro+self.Rr+Rd+minJitter
        print("Retardo total for CODEC "+  i + " :" + str(Rt))
-       resultValues[i]["Rt"]=Rt
-    
-       #En BHT suponemos probabilidad de llamada del 100%
-       BHT=Nc*Nl*Tpll/60
-       print("Tráfico hora cargada (Erlangs)", BHT)
-       resultValues[i]["BHT"]=BHT
-    
-       Nll=erlangB.lines(BHT,Pb)
-       print("Number of calls ", Nll)
-       resultValues[i]["Nll"]=Nll
+       self.resultValues[i]["Rt"]=Rt  
        
-      #CALCULO DEL ANCHO DE BANDA PARA RTP  
-       TRAMAS_VOZ = 4
-       if (Tcwan == "RTP") :
-             
-             Lcabecera = Enlace[ETH] + Enlace[ENC] + Transporte_Red["IP"] + Transporte_Red["UDP"] + Transporte_Red["RTP"] + TRAMAS_VOZ
-             Lpaquete = (Lcabecera + codecInfo["G711"]["VPS"]) * 8
-             BWll = Lpaquete * codecInfo["G711"]["PPS"]
-             BWst = Nll * BWll * (1 + BWres)
-             print("\nAncho de banda de llamada:", BWll)
-             print("Ancho de banda SIPTRUNK", BWst)
-            #CALCULO DEL ANCHO DE BANDA PARA cRTP   
-       else :
-            #CALCULO DEL ANCHO DE BANDA PARA cRTP
+
+   def getBHT(self):
+      for i in self.validCodec:
+        self.BHT=self.Nc*self.Nll*self.Tpll/60.0
+        print("Tráfico hora cargada (Erlangs)", self.BHT)
+        self.resultValues[i]["BHT"]=self.BHT
+
+   def getNumberOfCalls(self):
+      for i in self.validCodec:
+        Nll=erlangB.lines(self.resultValues[i]["BHT"],self.Pb)
+        print("Number of calls ", Nll)
+        self.resultValues[i]["Nll"]=Nll
+
+   def getBWst(self):
+      for i in self.validCodec:
+         if (self.TcWan == "RTP") :
+            Lcabecera = self.Enlace[self.ETH] + self.Enlace[self.ENC] + self.Transporte_Red["IP"] + self.Transporte_Red["UDP"] + self.Transporte_Red["RTP"] + self.TRAMAS_VOZ
+            Lpaquete = (Lcabecera + self.codecInfo[i]["VPS"]) * 8
+         else :
             COMPRIMIDO = 4
-            Lcabecera = Enlace[ETH] + Enlace[ENC] + COMPRIMIDO + TRAMAS_VOZ
-            Lpaquete = (Lcabecera + codecInfo[i]["VPS"]) * 8
-            BWll = Lpaquete * codecInfo[i]["PPS"]
-            BWst = Nll * BWll * (1 + BWres)
-            print("\nAncho de banda de llamada comprimido:", BWll)
-            print("Ancho de banda SIPTRUNK comprimido", BWst)
-        
-       resultValues[i]["BWll"]=BWll
-       resultValues[i]["BWst"]=BWst
-       stringResults.append([ i, codecInfo[i]["MOS"], (resultValues[i]["Rt"]), (resultValues[i]["BHT"]), (resultValues[i]["Nll"]), (resultValues[i]["BWll"]), (resultValues[i]["BWst"]), (resultValues[i]["NpaquetesRTP"]) ]) 
-    
-    #stringTable = pd.DataFrame(stringResults, columns = ['CODEC','MOS', "RT", "BHT", "Nll", "BWll", "BWst"])
-    return stringResults
+            Lcabecera = self.Enlace[self.ETH] + self.Enlace[self.ENC] + COMPRIMIDO + self.TRAMAS_VOZ
+            Lpaquete = (Lcabecera + self.codecInfo[i]["VPS"]) * 8
+
+         BWll = Lpaquete * self.codecInfo[i]["PPS"]
+         BWst = self.resultValues[i]["Nll"] * BWll * (1 + self.BWres)
+         print("\nAncho de banda de llamada comprimido:", BWll)
+         print("Ancho de banda SIPTRUNK comprimido", BWst) 
+         self.resultValues[i]["BWll"]=BWll
+         self.resultValues[i]["BWst"]=BWst
+      
+
+
+   
+   def calculateAll(self):
+      self.validCodec = []
+      self.resultValues={}
+      self.stringResults=[]
+      self.getValidCodec()
+      self.getRetardoTotal()
+      self.getBHT()
+      self.getNumberOfCalls()
+      self.getBWst()
+      for i in self.validCodec:
+         self.stringResults.append([ i, self.codecInfo[i]["MOS"], (self.resultValues[i]["Rt"]), (self.resultValues[i]["BHT"]), (self.resultValues[i]["Nll"]), (self.resultValues[i]["BWll"]), (self.resultValues[i]["BWst"]), (self.resultValues[i]["NpaquetesRTP"]) ]) 
+      return self.stringResults
+
 
 def main():
-    result=calculateCodec(4,75,1.5,2,150,20,3, 0.03, 0.1,"ETHERNET8021Q","PPP", "RTP",150)
-    print(result)
+    myCodec= voipCodecs()
+    myCodec.minimunMos=4
+    myCodec.Rr=75
+    myCodec.Nc=150
+    myCodec.Nl=20
+    myCodec.Tpll=3
+    myCodec.Rto=150
+    myCodec.Pb=0.03
+    myCodec.BWres=0.1
+    myCodec.ETH="ETHERNET8021Q"
+    myCodec.ENC="PPP"
+    myCodec.TcWan="RTP"
+
+    myCodec.getValidCodec()
+    myCodec.getRetardoTotal()
+    myCodec.getBHT()
+    myCodec.getNumberOfCalls()
+    myCodec.getBWst()
 
 if __name__ == '__main__':
     main()
     
+
+def getMosFromText(mosString):
+        if (mosString=="Excelente"):
+            mos=5
+        elif (mosString=="Buena"):
+            mos=4
+        elif (mosString=="Aceptable"):
+            mos=3
+        elif (mosString=="Pobre"):
+            mos=2
+        else :
+            mos=1
+        return mos
+
+def getRtoFromText(rtoString):
+    if (rtoString=="Aceptable"):
+            rto=150
+    elif (rtoString=="Moderadamente aceptable"):
+            rto=400
+    return rto   
+    
+def getTextFromMos(mosValue):
+    if (mosValue==5):
+        mos="Excelente"
+    elif (mosValue==4):
+        mos="Buena"
+    elif (mosValue==3):
+        mos="Aceptable"
+    elif (mosValue==2):
+        mos="Pobre"
+    else :
+        mos="Mala"
+    return mos   

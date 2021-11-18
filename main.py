@@ -5,11 +5,11 @@ import calculateCodec
 
 class ResultsWindow(QtWidgets.QMainWindow, Ui_VentanaWindow):
 
-    def __init__(self, result, valuesIntroduced):
+    def __init__(self, result, myCodec ):
         QtWidgets.QMainWindow.__init__(self)
         self.setupUi(self)
-        self.valuesIntroduced=valuesIntroduced
         numberOfValidCodecs=len(result)
+        self.myCodec=myCodec
         if(numberOfValidCodecs>0):
             self.tableWidget.setRowCount(numberOfValidCodecs)
             self.validCodecs.setProperty("intValue", numberOfValidCodecs)
@@ -17,36 +17,35 @@ class ResultsWindow(QtWidgets.QMainWindow, Ui_VentanaWindow):
                 for j in range(len(result[i])):
                     newitem = QtWidgets.QTableWidgetItem(str(result[i][j]))
                     self.tableWidget.setItem(i, j, newitem)
-        else :
-            self.pbCalcular.clicked.connect(self.recalculate)
+
+        self.pbCalcular.clicked.connect(self.recalculate)        
+
     
     def recalculate(self):
         self.hide()
-        self.w = MainWindows(bool(0),self.valuesIntroduced)
+        self.w = MainWindows(bool(0), self.myCodec)
         self.w.show()
             
     
 
 
 class MainWindows(QtWidgets.QMainWindow, Ui_MainWindow):
-    def __init__(self, firstTry, values): 
+    def __init__(self, firstTry, myCodec): 
         QtWidgets.QMainWindow.__init__(self)
         self.setupUi(self)
         self.tabMenu.setCurrentIndex(0)
         self.pbCalcular.clicked.connect(self.goToSecondPage)
         if(not firstTry):
-            self.Nc.setValue(values[0]);
-            self.Nll.setValue(values[1]);
-            self.Tpll.setValue(values[2]);
-            self.Pb.setValue(values[3]);
-            self.ETH.setCurrentText(values[4]);
-            self.ENC.setCurrentText(values[5]);
-            self.TUN.setCurrentText(values[6]);
-            self.BWres.setValue(values[7]);
-            self.Rr.setValue(values[8]);
-            self.minJitter.setValue(values[9]);
-            self.maxJitter.setValue(values[10]);
-            self.MOS.setCurrentText(values[11]);
+            self.Nc.setValue(myCodec.Nc)
+            self.Nll.setValue(myCodec.Nll)
+            self.Tpll.setValue(myCodec.Tpll)
+            self.Pb.setValue(myCodec.Pb)
+            self.ETH.setCurrentText(myCodec.ETH)
+            self.ENC.setCurrentText(myCodec.ENC)
+            self.TUN.setCurrentText(myCodec.TUN)
+            self.BWres.setValue(myCodec.BWres)
+            self.Rr.setValue(myCodec.Rr)
+            self.MOS.setCurrentText(calculateCodec.getTextFromMos(myCodec.minimunMos))
 
     def goToSecondPage(self):
         self.tabMenu.setCurrentIndex(1)
@@ -64,54 +63,38 @@ class MainWindows(QtWidgets.QMainWindow, Ui_MainWindow):
         self.pbCalcular.clicked.connect(self.goToFifthPage)   
     def goToFifthPage(self):
         self.tabMenu.setCurrentIndex(4)
-        self.progressBar.setValue(75)
+        self.progressBar.setValue(100)
         self.pbCalcular.setText("Calcular")
         self.pbCalcular.clicked.connect(self.calcular)        
 
     def calcular(self):
-        Nc=self.Nc.value();
-        Nll=self.Nll.value();
-        Tpll=self.Tpll.value();
-        Pb=self.Pb.value();
-        ETH=self.ETH.currentText();
-        ENC=self.ENC.currentText();
-        TUN=self.TUN.currentText();
-        BWres=self.BWres.value();
-        Rr=self.Rr.value();
-        jitterMin=self.minJitter.value();
-        jitterMax=self.maxJitter.value();
-        mosString=self.MOS.currentText();
-        TcWan=self.TcWan.currentText();
-        Rto=self.Rt.currentText();
 
-        if (mosString=="Excelente"):
-            mos=5
-        elif (mosString=="Buena"):
-            mos=4
-        elif (mosString=="Aceptable"):
-            mos=3
-        elif (mosString=="Pobre"):
-            mos=2
-        elif (mosString=="Mala"):
-            mos=1
-        else :
-            mos=0
-                
-        if (Rto=="Aceptable"):
-            Rt=150
-        elif (Rto=="Moderadamente aceptable"):
-            Rt==400
-    
-        valuesIntroduced=[Nc,Nll,Tpll,Pb,ETH,ENC,TUN,BWres,Rr,jitterMin,jitterMax,mosString]
-        stringTable=calculateCodec.calculateCodec(mos, Rr, jitterMin, jitterMax, Nc, Nll, Tpll, Pb, BWres, ETH, ENC, TcWan, Rt)
-        self.w = ResultsWindow(stringTable,valuesIntroduced)
+        myCodec.Nc=self.Nc.value()
+        myCodec.Nll=self.Nll.value()
+        myCodec.Tpll=self.Tpll.value()
+        myCodec.Pb=self.Pb.value()
+        myCodec.ETH=self.ETH.currentText()
+        myCodec.ENC=self.ENC.currentText()
+        myCodec.TUN=self.TUN.currentText()
+        myCodec.BWres=self.BWres.value()
+        myCodec.Rr=self.Rr.value()
+        myCodec.TcWan=self.TcWan.currentText()
+        myCodec.minimunMos=calculateCodec.getMosFromText(self.MOS.currentText())
+        myCodec.Rto=calculateCodec.getRtoFromText(self.Rt.currentText())
+        
+        stringTable=myCodec.calculateAll()
+        print(stringTable)
+        self.w = ResultsWindow(stringTable,myCodec)
         self.w.show()
         self.hide()
-        
 
+    
 
 if __name__ == "__main__":
     app = QtWidgets.QApplication([]) #Pasar los parámetros
-    windows = MainWindows(bool(1),[])
+    myCodec= calculateCodec.voipCodecs()
+    windows = MainWindows(bool(1),myCodec)
     windows.show()
     app.exec_()
+
+ 
