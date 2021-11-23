@@ -66,7 +66,7 @@
      <bool>true</bool>
     </property>
     <property name="currentIndex">
-     <number>0</number>
+     <number>4</number>
     </property>
     <widget class="QWidget" name="tab">
      <attribute name="title">
@@ -490,6 +490,20 @@
          </property>
         </widget>
        </item>
+       <item row="2" column="0">
+        <widget class="QLabel" name="label_3">
+         <property name="text">
+          <string>Ruta del fichero</string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="1">
+        <widget class="QFontComboBox" name="ruta">
+         <property name="currentText">
+          <string>C:/</string>
+         </property>
+        </widget>
+       </item>
       </layout>
      </widget>
     </widget>
@@ -517,7 +531,7 @@
      <x>0</x>
      <y>0</y>
      <width>838</width>
-     <height>24</height>
+     <height>26</height>
     </rect>
    </property>
   </widget>

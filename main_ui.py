@@ -186,6 +186,12 @@ class Ui_MainWindow(object):
         self.BWres.setSingleStep(0.01)
         self.BWres.setObjectName("BWres")
         self.formLayout_3.setWidget(1, QtWidgets.QFormLayout.FieldRole, self.BWres)
+        self.label_3 = QtWidgets.QLabel(self.formLayoutWidget_3)
+        self.label_3.setObjectName("label_3")
+        self.formLayout_3.setWidget(2, QtWidgets.QFormLayout.LabelRole, self.label_3)
+        self.ruta = QtWidgets.QFontComboBox(self.formLayoutWidget_3)
+        self.ruta.setObjectName("ruta")
+        self.formLayout_3.setWidget(2, QtWidgets.QFormLayout.FieldRole, self.ruta)
         self.tabMenu.addTab(self.tab_5, "")
         self.pbCalcular = QtWidgets.QPushButton(self.centralwidget)
         self.pbCalcular.setEnabled(True)
@@ -193,7 +199,7 @@ class Ui_MainWindow(object):
         self.pbCalcular.setObjectName("pbCalcular")
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(MainWindow)
-        self.menubar.setGeometry(QtCore.QRect(0, 0, 838, 24))
+        self.menubar.setGeometry(QtCore.QRect(0, 0, 838, 26))
         self.menubar.setObjectName("menubar")
         MainWindow.setMenuBar(self.menubar)
         self.statusbar = QtWidgets.QStatusBar(MainWindow)
@@ -201,7 +207,7 @@ class Ui_MainWindow(object):
         MainWindow.setStatusBar(self.statusbar)
 
         self.retranslateUi(MainWindow)
-        self.tabMenu.setCurrentIndex(0)
+        self.tabMenu.setCurrentIndex(4)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):
@@ -240,6 +246,8 @@ class Ui_MainWindow(object):
         self.tabMenu.setTabText(self.tabMenu.indexOf(self.tab_4), _translate("MainWindow", "GoS"))
         self.label_15.setText(_translate("MainWindow", "Probabilidad de bloqueo"))
         self.label_16.setText(_translate("MainWindow", "Ancho de banda (BWres)"))
+        self.label_3.setText(_translate("MainWindow", "Ruta del fichero"))
+        self.ruta.setCurrentText(_translate("MainWindow", "C:/"))
         self.tabMenu.setTabText(self.tabMenu.indexOf(self.tab_5), _translate("MainWindow", "Ancho de banda"))
         self.pbCalcular.setText(_translate("MainWindow", "Siguiente paso"))
 

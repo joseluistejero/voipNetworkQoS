@@ -84,10 +84,27 @@ class MainWindows(QtWidgets.QMainWindow, Ui_MainWindow):
         self.tabMenu.setCurrentIndex(4)
         self.progressBar.setValue(100)
         self.pbCalcular.setText("Calcular")
-        self.pbCalcular.clicked.connect(self.calcular)        
+        self.pbCalcular.clicked.connect(self.calcular)      
+    
+    def leerFichero(self):
+        cont1 = 0
+        p = [0,0,0,0,0,0,0,0,0,0]
+        with open(self.ruta.currentText()) as f:
+            for linea in f:
+                for a in linea:
+                    if (a == "1"):
+                        cont1+=1
+                    elif (a == "0"):
+                        p[cont1]+=1 
+                        cont1=0
+        p[0]+=p[1]+p[2]+p[3]+p[4]+p[5]+p[6]+p[7]+p[8]+p[9]
+        print(p)          
+        return p
+    
+    
 
     def calcular(self):
-
+        
         myCodec.Nc=self.Nc.value()
         myCodec.Nll=self.Nll.value()
         myCodec.Tpll=self.Tpll.value()
@@ -100,6 +117,8 @@ class MainWindows(QtWidgets.QMainWindow, Ui_MainWindow):
         myCodec.TcWan=self.TcWan.currentText()
         myCodec.minimunMos=calculateCodec.getMosFromText(self.MOS.currentText())
         myCodec.Rto=calculateCodec.getRtoFromText(self.Rt.currentText())
+        myCodec.Pperd=calculateCodec.getProbabPaquete(self.leerFichero())
+        myCodec.E=calculateCodec.getPromRafaga(self.leerFichero())
         
         stringTable=myCodec.calculateAll()
         print(stringTable)

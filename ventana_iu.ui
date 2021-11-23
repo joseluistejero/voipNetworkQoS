@@ -85,7 +85,7 @@
      <rect>
       <x>10</x>
       <y>170</y>
-      <width>811</width>
+      <width>821</width>
       <height>181</height>
      </rect>
     </property>
@@ -113,11 +113,11 @@
     <attribute name="horizontalHeaderDefaultSectionSize">
      <number>100</number>
     </attribute>
-    <attribute name="verticalHeaderMinimumSectionSize">
-     <number>11</number>
-    </attribute>
     <attribute name="verticalHeaderDefaultSectionSize">
      <number>30</number>
+    </attribute>
+    <attribute name="verticalHeaderMinimumSectionSize">
+     <number>11</number>
     </attribute>
     <column>
      <property name="text">
@@ -159,6 +159,16 @@
       <string>PaquetesRTP</string>
      </property>
     </column>
+    <column>
+     <property name="text">
+      <string>Pperd</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>E</string>
+     </property>
+    </column>
    </widget>
    <widget class="QPushButton" name="sendMail">
     <property name="geometry">
@@ -185,7 +195,7 @@
      <x>0</x>
      <y>0</y>
      <width>838</width>
-     <height>24</height>
+     <height>26</height>
     </rect>
    </property>
   </widget>

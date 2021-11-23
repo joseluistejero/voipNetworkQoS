@@ -123,7 +123,9 @@ class voipCodecs:
                          "Nll":"",
                          "BWll":"",
                          "BWst":"",
-                         "NpaquetesRTP":""
+                         "NpaquetesRTP":"",
+                         "Pperd":"",
+                         "E":""
                       }  
                 } 
              )
@@ -180,7 +182,7 @@ class voipCodecs:
       
 
    def toString(self):
-        stringTable = pd.DataFrame(self.stringResults, columns = ['CODEC','MOS', "RT", "BHT", "Nll", "BWll", "BWst", "NPaquetesRTP"])
+        stringTable = pd.DataFrame(self.stringResults, columns = ['CODEC','MOS', "RT", "BHT", "Nll", "BWll", "BWst", "NPaquetesRTP", "Pperd", "E"])
         print(stringTable)
         return stringTable
    
@@ -194,7 +196,7 @@ class voipCodecs:
       self.getNumberOfCalls()
       self.getBWst()
       for i in self.validCodec:
-         self.stringResults.append([ i, self.codecInfo[i]["MOS"], (self.resultValues[i]["Rt"]), (self.resultValues[i]["BHT"]), (self.resultValues[i]["Nll"]), (self.resultValues[i]["BWll"]), (self.resultValues[i]["BWst"]), (self.resultValues[i]["NpaquetesRTP"]) ]) 
+         self.stringResults.append([ i, self.codecInfo[i]["MOS"], (self.resultValues[i]["Rt"]), (self.resultValues[i]["BHT"]), (self.resultValues[i]["Nll"]), (self.resultValues[i]["BWll"]), (self.resultValues[i]["BWst"]), (self.resultValues[i]["NpaquetesRTP"]), (self.Pperd), (self.E) ]) 
       return self.stringResults
 
 
@@ -254,3 +256,21 @@ def getTextFromMos(mosValue):
     else :
         mos="Mala"
     return mos   
+
+def getProbabPaquete(p):
+    q = (p[1]+p[2]*2+p[3]*3+p[4]*4+p[5]*5+p[6]*6+p[7]*7+p[8]*8+p[9]*9)/p[0]
+    x = p[1]+p[2]+p[3]+p[4]+p[5]+p[6]+p[7]+p[8]+p[9]
+    
+    Pperd = x/(x+q)
+    print(q)
+    return Pperd
+
+def getPromRafaga(p):
+    q = (p[1]+p[2]*2+p[3]*3+p[4]*4+p[5]*5+p[6]*6+p[7]*7+p[8]*8+p[9]*9)/p[0]
+    E = 1/q
+    
+    return E
+
+
+
+
