@@ -179,7 +179,10 @@ class voipCodecs:
          self.resultValues[i]["BWst"]=BWst
       
 
-
+   def toString(self):
+        stringTable = pd.DataFrame(self.stringResults, columns = ['CODEC','MOS', "RT", "BHT", "Nll", "BWll", "BWst", "NPaquetesRTP"])
+        print(stringTable)
+        return stringTable
    
    def calculateAll(self):
       self.validCodec = []

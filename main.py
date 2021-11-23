@@ -2,6 +2,7 @@ from PyQt5 import QtWidgets
 from main_ui import *
 from ventana_ui import *
 import calculateCodec
+import smtplib
 
 class ResultsWindow(QtWidgets.QMainWindow, Ui_VentanaWindow):
 
@@ -10,23 +11,41 @@ class ResultsWindow(QtWidgets.QMainWindow, Ui_VentanaWindow):
         self.setupUi(self)
         numberOfValidCodecs=len(result)
         self.myCodec=myCodec
+     
         if(numberOfValidCodecs>0):
             self.tableWidget.setRowCount(numberOfValidCodecs)
             self.validCodecs.setProperty("intValue", numberOfValidCodecs)
+            print("Hola")
+            print("Hola"+ "\n"+ str(myCodec.toString()))
             for i in range(numberOfValidCodecs):
                 for j in range(len(result[i])):
                     newitem = QtWidgets.QTableWidgetItem(str(result[i][j]))
                     self.tableWidget.setItem(i, j, newitem)
 
         self.pbCalcular.clicked.connect(self.recalculate)        
-
+        self.sendMail.clicked.connect(self.enviarCorreo)
     
     def recalculate(self):
         self.hide()
         self.w = MainWindows(bool(0), self.myCodec)
         self.w.show()
             
-    
+    def enviarCorreo(self):
+        port=587 
+        smtp_server = "correo.ugr.es" 
+        sender_email = "joseluistejero@correo.ugr.es"
+        receiver_email = "joseluistejero@correo.ugr.es"
+        password=input (" Escribe la contraseña de tu correo ugr: ") 
+        body=str(self.myCodec.toString())
+        SUBJECT="Valid Codecs"
+        message = 'Subject: {}\n\n{}'.format(SUBJECT, body)
+        with smtplib.SMTP(smtp_server, port) as server: 
+          server.ehlo () # Puede omitirse 
+          server.starttls () 
+          server.ehlo () 
+          server.login (sender_email, password) 
+          server.sendmail (sender_email, receiver_email, message) 
+          server.close () # Puede ser admitido
 
 
 class MainWindows(QtWidgets.QMainWindow, Ui_MainWindow):
@@ -84,6 +103,7 @@ class MainWindows(QtWidgets.QMainWindow, Ui_MainWindow):
         
         stringTable=myCodec.calculateAll()
         print(stringTable)
+        
         self.w = ResultsWindow(stringTable,myCodec)
         self.w.show()
         self.hide()
