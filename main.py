@@ -117,8 +117,8 @@ class MainWindows(QtWidgets.QMainWindow, Ui_MainWindow):
         myCodec.TcWan=self.TcWan.currentText()
         myCodec.minimunMos=calculateCodec.getMosFromText(self.MOS.currentText())
         myCodec.Rto=calculateCodec.getRtoFromText(self.Rt.currentText())
-        #myCodec.Pperd=calculateCodec.getProbabPaquete(self.leerFichero())
-        #myCodec.E=calculateCodec.getPromRafaga(self.leerFichero())
+        myCodec.Pperd=calculateCodec.getProbabPaquete(self.leerFichero())
+        myCodec.E=calculateCodec.getPromRafaga(self.leerFichero())
         
         stringTable=myCodec.calculateAll()
         print(stringTable)

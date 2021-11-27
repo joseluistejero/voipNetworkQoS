@@ -109,7 +109,7 @@ class voipCodecs:
       self.getNumberOfCalls()
       self.getBWst()
       for i in self.validCodec:
-         self.stringResults.append([ i, self.codecInfo[i]["MOS"], (self.resultValues[i]["Rt"]), (self.resultValues[i]["BHT"]), (self.resultValues[i]["Nll"]), (self.resultValues[i]["BWll"]), (self.resultValues[i]["BWst"]), (self.resultValues[i]["NpaquetesRTP"]), (self.resultValues[i]["Pperd"]), (self.resultValues[i]["E"]) ]) 
+         self.stringResults.append([ i, self.codecInfo[i]["MOS"], (self.resultValues[i]["Rt"]), (self.resultValues[i]["BHT"]), (self.resultValues[i]["Nll"]), (self.resultValues[i]["BWll"]), (self.resultValues[i]["BWst"]), (self.resultValues[i]["NpaquetesRTP"]), (self.Pperd), (self.E) ]) 
       return self.stringResults
 
 
@@ -179,6 +179,8 @@ def getPromRafaga(p):
     E = 1/q
     
     return E
+
+
 
 
 
