@@ -167,15 +167,15 @@ def getTextFromMos(mosValue):
     return mos   
 
 def getProbabPaquete(p):
-    q = (p[1]+p[2]*2+p[3]*3+p[4]*4+p[5]*5+p[6]*6+p[7]*7+p[8]*8+p[9]*9)/p[0]
-    x = p[1]+p[2]+p[3]+p[4]+p[5]+p[6]+p[7]+p[8]+p[9]
+    q = 1-((p[1]+p[2]*2+p[3]*3+p[4]*4+p[5]*5+p[6]*6+p[7]*7+p[8]*8+p[9]*9)/p[0])
+    x = (p[1]+p[2]+p[3]+p[4]+p[5]+p[6]+p[7]+p[8]+p[9])/p[0]
     
     Pperd = x/(x+q)
     print(q)
     return Pperd
 
 def getPromRafaga(p):
-    q = (p[1]+p[2]*2+p[3]*3+p[4]*4+p[5]*5+p[6]*6+p[7]*7+p[8]*8+p[9]*9)/p[0]
+    q =  1-((p[1]+p[2]*2+p[3]*3+p[4]*4+p[5]*5+p[6]*6+p[7]*7+p[8]*8+p[9]*9)/p[0])
     E = 1/q
     
     return E
