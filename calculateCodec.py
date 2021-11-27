@@ -5,111 +5,24 @@ Created on Wed Nov 10 12:28:44 2021
 @author: josel
 """
 import math
+
+from numpy import string_
 import erlangB as erlangB
 import pandas as pd
+import codecInfoDB
 
 class voipCodecs:
-   codecInfo = {
-            "G711": {
-                "CSS": 80, 
-                "CSI": 10, 
-                "MOS":4.1, 
-                "VPS":160, 
-                "VPSs":20, 
-                "PPS":50,
-                "BWmp":82.8,
-                "BWcRTP":67.6,
-                "BWeth":87.2
-             },
-             "G729":{
-                "CSS": 10, 
-                "CSI": 10, 
-                "MOS":3.92, 
-                "VPS":20, 
-                "VPSs":20, 
-                "PPS":50,
-                "BWmp":26.8,
-                "BWcRTP":11.6,
-                "BWeth":31.2
-             },
-             "G723.1(6.3)":{
-                "CSS": 24, 
-                "CSI": 30, 
-                "MOS":3.9, 
-                "VPS":24, 
-                "VPSs":30, 
-                "PPS":33.3,
-                "BWmp":18.9,
-                "BWcRTP":8.8,
-                "BWeth":21.9
-             },
-             "G723.1(5.3)":{
-                "CSS": 20, 
-                "CSI": 30, 
-                "MOS":3.8, 
-                "VPS":20, 
-                "VPSs":30, 
-                "PPS":33.3,
-                "BWmp":17.9,
-                "BWcRTP":7.7,
-                "BWeth":20.8
-             },
-             "G726(32)":{
-                "CSS": 20, 
-                "CSI": 5, 
-                "MOS":3.5, 
-                "VPS":80, 
-                "VPSs":20, 
-                "PPS":50,
-                "BWmp":50.8,
-                "BWcRTP":35.6,
-                "BWeth":55.2
-             },
-             "G728":{
-                "CSS": 10, 
-                "CSI": 5, 
-                "MOS":3.61, 
-                "VPS":60, 
-                "VPSs":30, 
-                "PPS":33.3,
-                "BWmp":28.5,
-                "BWcRTP":18.4,
-                "BWeth":31.5
-             },
-             "G722_64k":{
-                "CSS": 80, 
-                "CSI": 10, 
-                "MOS":4.13, 
-                "VPS":160, 
-                "VPSs":20, 
-                "PPS":50,
-                "BWmp":82.8,
-                "BWcRTP":67.6,
-                "BWeth":87.2
-            }
-    }
-   Transporte_Red = {
-        "RTP":12,
-        "UDP":8,
-        "IP":20
-   } 
-   Enlace = {
-        "ETHERNET":14,
-        "ETHERNET8021Q":18,
-        "ETHERNETQinQ":22,
-        "PPP":6,
-        "PPOE":20
-   }
-   Tuneles = {
-        "IPSEC":50,
-        "L2TP":24,
-        "MPLS":4   
-   } 
-   TRAMAS_VOZ = 4
+   
    def __init__(self):
       self.validCodec = []
       self.resultValues={}
       self.stringResults=[]
+      self.allCodecs=codecInfoDB.codecInfoClass()
+      self.codecInfo=self.allCodecs.codecList
+      self.Transporte_Red=self.allCodecs.Transporte_Red
+      self.Enlace=self.allCodecs.Enlace
+      self.Tuneles=self.allCodecs.Tuneles
+      self.TRAMAS_VOZ=self.allCodecs.TRAMAS_VOZ
 
    def getValidCodec(self):
       for id, info in self.codecInfo.items():
@@ -153,7 +66,7 @@ class voipCodecs:
 
    def getBHT(self):
       for i in self.validCodec:
-        self.BHT=self.Nc*self.Nll*self.Tpll/60.0
+        self.BHT=self.Nc*self.Nl*self.Tpll/60.0
         print("Tráfico hora cargada (Erlangs)", self.BHT)
         self.resultValues[i]["BHT"]=self.BHT
 
@@ -196,7 +109,7 @@ class voipCodecs:
       self.getNumberOfCalls()
       self.getBWst()
       for i in self.validCodec:
-         self.stringResults.append([ i, self.codecInfo[i]["MOS"], (self.resultValues[i]["Rt"]), (self.resultValues[i]["BHT"]), (self.resultValues[i]["Nll"]), (self.resultValues[i]["BWll"]), (self.resultValues[i]["BWst"]), (self.resultValues[i]["NpaquetesRTP"]), (self.Pperd), (self.E) ]) 
+         self.stringResults.append([ i, self.codecInfo[i]["MOS"], (self.resultValues[i]["Rt"]), (self.resultValues[i]["BHT"]), (self.resultValues[i]["Nll"]), (self.resultValues[i]["BWll"]), (self.resultValues[i]["BWst"]), (self.resultValues[i]["NpaquetesRTP"]), (self.resultValues[i]["Pperd"]), (self.resultValues[i]["E"]) ]) 
       return self.stringResults
 
 
@@ -214,11 +127,7 @@ def main():
     myCodec.ENC="PPP"
     myCodec.TcWan="RTP"
 
-    myCodec.getValidCodec()
-    myCodec.getRetardoTotal()
-    myCodec.getBHT()
-    myCodec.getNumberOfCalls()
-    myCodec.getBWst()
+    myCodec.calculateAll()
 
 if __name__ == '__main__':
     main()

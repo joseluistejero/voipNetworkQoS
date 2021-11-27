@@ -106,7 +106,7 @@ class MainWindows(QtWidgets.QMainWindow, Ui_MainWindow):
     def calcular(self):
         
         myCodec.Nc=self.Nc.value()
-        myCodec.Nll=self.Nll.value()
+        myCodec.Nl=self.Nll.value()
         myCodec.Tpll=self.Tpll.value()
         myCodec.Pb=self.Pb.value()
         myCodec.ETH=self.ETH.currentText()
@@ -117,8 +117,8 @@ class MainWindows(QtWidgets.QMainWindow, Ui_MainWindow):
         myCodec.TcWan=self.TcWan.currentText()
         myCodec.minimunMos=calculateCodec.getMosFromText(self.MOS.currentText())
         myCodec.Rto=calculateCodec.getRtoFromText(self.Rt.currentText())
-        myCodec.Pperd=calculateCodec.getProbabPaquete(self.leerFichero())
-        myCodec.E=calculateCodec.getPromRafaga(self.leerFichero())
+        #myCodec.Pperd=calculateCodec.getProbabPaquete(self.leerFichero())
+        #myCodec.E=calculateCodec.getPromRafaga(self.leerFichero())
         
         stringTable=myCodec.calculateAll()
         print(stringTable)
