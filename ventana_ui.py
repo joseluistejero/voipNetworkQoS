@@ -11,7 +11,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_VentanaWindow(object):
     def setupUi(self, VentanaWindow):
         VentanaWindow.setObjectName("VentanaWindow")
-        VentanaWindow.resize(838, 772)
+        VentanaWindow.resize(1028, 772)
         font = QtGui.QFont()
         font.setPointSize(13)
         VentanaWindow.setFont(font)
@@ -42,7 +42,7 @@ class Ui_VentanaWindow(object):
         self.validCodecs.setProperty("intValue", 0)
         self.validCodecs.setObjectName("validCodecs")
         self.tableWidget = QtWidgets.QTableWidget(self.centralwidget)
-        self.tableWidget.setGeometry(QtCore.QRect(10, 170, 821, 181))
+        self.tableWidget.setGeometry(QtCore.QRect(10, 170, 1011, 181))
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -86,7 +86,7 @@ class Ui_VentanaWindow(object):
         self.sendMail.setObjectName("sendMail")
         VentanaWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(VentanaWindow)
-        self.menubar.setGeometry(QtCore.QRect(0, 0, 838, 26))
+        self.menubar.setGeometry(QtCore.QRect(0, 0, 1028, 26))
         self.menubar.setObjectName("menubar")
         VentanaWindow.setMenuBar(self.menubar)
         self.statusbar = QtWidgets.QStatusBar(VentanaWindow)
