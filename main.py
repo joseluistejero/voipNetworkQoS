@@ -15,8 +15,6 @@ class ResultsWindow(QtWidgets.QMainWindow, Ui_VentanaWindow):
         if(numberOfValidCodecs>0):
             self.tableWidget.setRowCount(numberOfValidCodecs)
             self.validCodecs.setProperty("intValue", numberOfValidCodecs)
-            print("Hola")
-            print("Hola"+ "\n"+ str(myCodec.toString()))
             for i in range(numberOfValidCodecs):
                 for j in range(len(result[i])):
                     newitem = QtWidgets.QTableWidgetItem(str(result[i][j]))
@@ -56,7 +54,7 @@ class MainWindows(QtWidgets.QMainWindow, Ui_MainWindow):
         self.pbCalcular.clicked.connect(self.goToSecondPage)
         if(not firstTry):
             self.Nc.setValue(myCodec.Nc)
-            self.Nll.setValue(myCodec.Nll)
+            self.Nll.setValue(myCodec.Nl)
             self.Tpll.setValue(myCodec.Tpll)
             self.Pb.setValue(myCodec.Pb)
             self.ETH.setCurrentText(myCodec.ETH)
