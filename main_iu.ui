@@ -440,7 +440,7 @@
         <x>20</x>
         <y>10</y>
         <width>691</width>
-        <height>224</height>
+        <height>131</height>
        </rect>
       </property>
       <layout class="QFormLayout" name="formLayout_3">
@@ -498,9 +498,19 @@
         </widget>
        </item>
        <item row="2" column="1">
-        <widget class="QFontComboBox" name="ruta">
-         <property name="currentText">
-          <string>C:/</string>
+        <widget class="QPushButton" name="CargarFichero">
+         <property name="enabled">
+          <bool>true</bool>
+         </property>
+         <property name="text">
+          <string>CARGAR FICHERO</string>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="1">
+        <widget class="QLabel" name="rutaFicheroLabel">
+         <property name="text">
+          <string/>
          </property>
         </widget>
        </item>
@@ -531,7 +541,7 @@
      <x>0</x>
      <y>0</y>
      <width>838</width>
-     <height>26</height>
+     <height>24</height>
     </rect>
    </property>
   </widget>

@@ -11,7 +11,6 @@ class ResultsWindow(QtWidgets.QMainWindow, Ui_VentanaWindow):
         self.setupUi(self)
         numberOfValidCodecs=len(result)
         self.myCodec=myCodec
-     
         if(numberOfValidCodecs>0):
             self.tableWidget.setRowCount(numberOfValidCodecs)
             self.validCodecs.setProperty("intValue", numberOfValidCodecs)
@@ -63,6 +62,8 @@ class MainWindows(QtWidgets.QMainWindow, Ui_MainWindow):
             self.BWres.setValue(myCodec.BWres)
             self.Rr.setValue(myCodec.Rr)
             self.MOS.setCurrentText(calculateCodec.getTextFromMos(myCodec.minimunMos))
+            self.rutaFicheroLabel.setText(myCodec.rutaFichero)
+            
 
     def goToSecondPage(self):
         self.tabMenu.setCurrentIndex(1)
@@ -83,11 +84,18 @@ class MainWindows(QtWidgets.QMainWindow, Ui_MainWindow):
         self.progressBar.setValue(100)
         self.pbCalcular.setText("Calcular")
         self.pbCalcular.clicked.connect(self.calcular)      
-    
+        self.CargarFichero.clicked.connect(self.leerFichero) 
+
     def leerFichero(self):
+        options = QtWidgets.QFileDialog.Options()
+        options |= QtWidgets.QFileDialog.DontUseNativeDialog
+        rutaFichero, _ = QtWidgets.QFileDialog.getOpenFileName(self,"QFileDialog.getOpenFileName()", "","All Files (*);;Python Files (*.py)", options=options)
+        self.rutaFicheroLabel.setText(rutaFichero)
+
+    def calcularRafagas(self):
         cont1 = 0
         p = [0,0,0,0,0,0,0,0,0,0]
-        with open(self.ruta.currentText()) as f:
+        with open(self.rutaFicheroLabel.text()) as f:
             for linea in f:
                 for a in linea:
                     if (a == "1"):
@@ -96,7 +104,6 @@ class MainWindows(QtWidgets.QMainWindow, Ui_MainWindow):
                         p[cont1]+=1 
                         cont1=0
         p[0]+=p[1]+p[2]+p[3]+p[4]+p[5]+p[6]+p[7]+p[8]+p[9]
-        print(p)          
         return p
     
     
@@ -115,8 +122,9 @@ class MainWindows(QtWidgets.QMainWindow, Ui_MainWindow):
         myCodec.TcWan=self.TcWan.currentText()
         myCodec.minimunMos=calculateCodec.getMosFromText(self.MOS.currentText())
         myCodec.Rto=calculateCodec.getRtoFromText(self.Rt.currentText())
-        myCodec.Pperd=calculateCodec.getProbabPaquete(self.leerFichero())
-        myCodec.E=calculateCodec.getPromRafaga(self.leerFichero())
+        myCodec.Pperd=calculateCodec.getProbabPaquete(self.calcularRafagas())
+        myCodec.E=calculateCodec.getPromRafaga(self.calcularRafagas())
+        myCodec.rutaFichero=self.rutaFicheroLabel.text()
         
         stringTable=myCodec.calculateAll()
         print(stringTable)
