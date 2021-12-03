@@ -212,14 +212,14 @@ class Ui_MainWindow(object):
         MainWindow.setStatusBar(self.statusbar)
 
         self.retranslateUi(MainWindow)
-        self.tabMenu.setCurrentIndex(4)
+        self.tabMenu.setCurrentIndex(0)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
         self.lNC.setText(_translate("MainWindow", "Número de clientes:"))
-        self.label.setText(_translate("MainWindow", "Número de llamadas"))
+        self.label.setText(_translate("MainWindow", "Número de lineas/cliente"))
         self.label_2.setText(_translate("MainWindow", "Tiempo medio de llamada"))
         self.tabMenu.setTabText(self.tabMenu.indexOf(self.tab), _translate("MainWindow", "Llamadas"))
         self.MOS.setItemText(0, _translate("MainWindow", "Excelente"))
