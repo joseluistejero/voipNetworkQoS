@@ -8,6 +8,9 @@ import math
 import erlangB as erlangB
 import pandas as pd
 
+#Esta clase contiene todos los códecs, tamaño de los túneles, protocolos y
+#tamaño de tramas de voz. Están guardadaos en un diccionario para poder usarlo
+#en la clase calculateCodec
 class codecInfoClass:
    codecList = {
             "G711": {
