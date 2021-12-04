@@ -11,8 +11,10 @@ import erlangB as erlangB
 import pandas as pd
 import codecInfoDB
 
+#En esta clase calcularemos todos los parámetros para obtener el códec válido según
+#las indicaciones del cliente.
 class voipCodecs:
-   
+   #Función para iniciar los atributos del objeto creado.
    def __init__(self):
       self.validCodec = []
       self.resultValues={}
@@ -23,12 +25,13 @@ class voipCodecs:
       self.Enlace=self.allCodecs.Enlace
       self.Tuneles=self.allCodecs.Tuneles
       self.TRAMAS_VOZ=self.allCodecs.TRAMAS_VOZ
-
+      
+   #Función que va añadiendo al vector cada uno de los códecs válidos. Para cada
+   #códec correcto se crea un diccionario con los valores que calcularemos   
    def getValidCodec(self):
       for id, info in self.codecInfo.items():
          if info["MOS"] > self.minimunMos:
-            self.validCodec.append(id) #Añadimos al vector cada uno de los codecs validos 
-            #Para cada codec correcto creo un diccionario con los valores que tomará todo lo que calculemos
+            self.validCodec.append(id) 
             self.resultValues.update(
                {id:{
                          "Rt":"",
@@ -46,6 +49,9 @@ class voipCodecs:
       print("\nVALID CODEC", self.validCodec)   
       print(self.resultValues)
 
+   #Función que calcula el retardo total para todos los códecs válidos, para ello. Ademas 
+   #calcula el número de paquetes RTP que puede almacenar la aplicación. Todos los valores
+   #se van guardando en el vector resultValues
    def getRetardoTotal(self):
       for i in self.validCodec:
        Ro=self.codecInfo[i]["VPSs"]+0.1*self.codecInfo[i]["CSI"]
@@ -63,19 +69,26 @@ class voipCodecs:
        print("Retardo total for CODEC "+  i + " :" + str(Rt))
        self.resultValues[i]["Rt"]=Rt  
        
-
+   #Función que permite calcular el tráfico en hora cargada y lo guarda en
+   #el vector resultValues
    def getBHT(self):
       for i in self.validCodec:
         self.BHT=self.Nc*self.Nl*self.Tpll/60.0
         print("Tráfico hora cargada (Erlangs)", self.BHT)
         self.resultValues[i]["BHT"]=self.BHT
-
+   
+   #Función estima el número máximo de llamadas que podrían realizarse 
+   #simultáneamente haciendo uso de la función erlangB y lo guarda en
+   #el vector resultValues
    def getNumberOfCalls(self):
       for i in self.validCodec:
         Nll=erlangB.lines(self.resultValues[i]["BHT"],self.Pb)
         print("Number of calls ", Nll)
         self.resultValues[i]["Nll"]=Nll
 
+   #Función que obtiene el ancho de banda que cumpla el GoS definido como parámetro
+   #de entrada. Permite calcularlo según RTP o cRTP según las indicaciones del 
+   #cliente y lo guarda en el vector resultValues
    def getBWst(self):
       for i in self.validCodec:
          if (self.TcWan == "RTP") :
@@ -93,12 +106,14 @@ class voipCodecs:
          self.resultValues[i]["BWll"]=BWll
          self.resultValues[i]["BWst"]=BWst
       
-
+   #Función para enseñar por la terminal una tabla con todos los resultados calculados
    def toString(self):
         stringTable = pd.DataFrame(self.stringResults, columns = ['CODEC','MOS', "RT", "BHT", "Nll", "BWll", "BWst", "NPaquetesRTP", "Pperd", "E"])
         print(stringTable)
         return stringTable
    
+   #Función que añade en un vector todos los valores calculados para todos los 
+   #códecs válidos.
    def calculateAll(self):
       self.validCodec = []
       self.resultValues={}
@@ -132,7 +147,7 @@ def main():
 if __name__ == '__main__':
     main()
     
-
+    #Función que traduce los valores descriptivos del MOS a valores numericos
 def getMosFromText(mosString):
         if (mosString=="Excelente"):
             mos=5
@@ -145,42 +160,48 @@ def getMosFromText(mosString):
         else :
             mos=1
         return mos
-
+    
+    #Función que traduce los valores descriptivos del retardo total a valores numericos
 def getRtoFromText(rtoString):
-    if (rtoString=="Aceptable"):
-            rto=150
-    elif (rtoString=="Moderadamente aceptable"):
-            rto=400
-    return rto   
-    
+        if (rtoString=="Aceptable"):
+                rto=150
+        elif (rtoString=="Moderadamente aceptable"):
+                rto=400
+        return rto   
+      
+    #Función que traduce los valores numericos del MOS a valores descriptivos
 def getTextFromMos(mosValue):
-    if (mosValue==5):
-        mos="Excelente"
-    elif (mosValue==4):
-        mos="Buena"
-    elif (mosValue==3):
-        mos="Aceptable"
-    elif (mosValue==2):
-        mos="Pobre"
-    else :
-        mos="Mala"
-    return mos   
-
+        if (mosValue==5):
+            mos="Excelente"
+        elif (mosValue==4):
+            mos="Buena"
+        elif (mosValue==3):
+            mos="Aceptable"
+        elif (mosValue==2):
+            mos="Pobre"
+        else :
+            mos="Mala"
+        return mos   
+    
+    #Función que a partir del vector calculado del fichero de 0 y 1 saca la probabilidad
+    #de pérdidad de paquete mediante la ecuación pertinente
 def getProbabPaquete(p):
-    q = 1-((p[1]+p[2]*2+p[3]*3+p[4]*4+p[5]*5+p[6]*6+p[7]*7+p[8]*8+p[9]*9)/p[0])
-    x = (p[1]+p[2]+p[3]+p[4]+p[5]+p[6]+p[7]+p[8]+p[9])/p[0]
+        q = 1-((p[1]+p[2]*2+p[3]*3+p[4]*4+p[5]*5+p[6]*6+p[7]*7+p[8]*8+p[9]*9)/p[0])
+        x = (p[1]+p[2]+p[3]+p[4]+p[5]+p[6]+p[7]+p[8]+p[9])/p[0]
+        
+        Pperdi = x/(x+q)
+        print(q)
+        Pperd = round(Pperdi,2)
+        return Pperd
     
-    Pperdi = x/(x+q)
-    print(q)
-    Pperd = round(Pperdi,2)
-    return Pperd
-
+    #Función que a partir del vector calculado del fichero de 0 y 1 calcula el 
+    #promedio de ráfaga a partir de la ecuación pertinente
 def getPromRafaga(p):
-    q =  1-((p[1]+p[2]*2+p[3]*3+p[4]*4+p[5]*5+p[6]*6+p[7]*7+p[8]*8+p[9]*9)/p[0])
-    Ei = 1/q
-    E = round(Ei,2)
-    
-    return E
+        q =  1-((p[1]+p[2]*2+p[3]*3+p[4]*4+p[5]*5+p[6]*6+p[7]*7+p[8]*8+p[9]*9)/p[0])
+        Ei = 1/q
+        E = round(Ei,2)
+        
+        return E
 
 
 
