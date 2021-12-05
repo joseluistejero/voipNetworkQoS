@@ -14,6 +14,7 @@ class ResultsWindow(QtWidgets.QMainWindow, Ui_VentanaWindow):
         self.setupUi(self)
         numberOfValidCodecs=len(result)
         self.myCodec=myCodec
+        self.correoEnviado.setVisible(0)
         if(numberOfValidCodecs>0):
             self.tableWidget.setRowCount(numberOfValidCodecs)
             self.validCodecs.setProperty("intValue", numberOfValidCodecs)
@@ -36,7 +37,7 @@ class ResultsWindow(QtWidgets.QMainWindow, Ui_VentanaWindow):
         port=587 
         smtp_server = "correo.ugr.es" 
         sender_email = "joseluistejero@correo.ugr.es"
-        receiver_email = "joseluistejero@correo.ugr.es"
+        receiver_email = self.correo.text()
         password=input (" Escribe la contraseña de tu correo ugr: ") 
         body=str(self.myCodec.toString())
         SUBJECT="Valid Codecs"
@@ -48,6 +49,8 @@ class ResultsWindow(QtWidgets.QMainWindow, Ui_VentanaWindow):
           server.login (sender_email, password) 
           server.sendmail (sender_email, receiver_email, message) 
           server.close () # Puede ser admitido
+        self.correoEnviado.setVisible(1)
+        self.sendMail.setEnabled(0)
 
 #Esta clase representa la página principal donde se introducen todos los datos
 class MainWindows(QtWidgets.QMainWindow, Ui_MainWindow):

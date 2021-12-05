@@ -113,11 +113,11 @@
     <attribute name="horizontalHeaderDefaultSectionSize">
      <number>100</number>
     </attribute>
-    <attribute name="verticalHeaderDefaultSectionSize">
-     <number>30</number>
-    </attribute>
     <attribute name="verticalHeaderMinimumSectionSize">
      <number>11</number>
+    </attribute>
+    <attribute name="verticalHeaderDefaultSectionSize">
+     <number>30</number>
     </attribute>
     <column>
      <property name="text">
@@ -166,16 +166,16 @@
     </column>
     <column>
      <property name="text">
-      <string>E</string>
+      <string>E[Rafaga]</string>
      </property>
     </column>
    </widget>
    <widget class="QPushButton" name="sendMail">
     <property name="geometry">
      <rect>
-      <x>400</x>
-      <y>460</y>
-      <width>211</width>
+      <x>330</x>
+      <y>450</y>
+      <width>181</width>
       <height>41</height>
      </rect>
     </property>
@@ -188,6 +188,50 @@
      <string>SEND MAIL</string>
     </property>
    </widget>
+   <widget class="QLineEdit" name="correo">
+    <property name="enabled">
+     <bool>true</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>510</x>
+      <y>460</y>
+      <width>251</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>13</pointsize>
+      <weight>50</weight>
+      <bold>false</bold>
+      <strikeout>false</strikeout>
+      <kerning>true</kerning>
+     </font>
+    </property>
+    <property name="layoutDirection">
+     <enum>Qt::LeftToRight</enum>
+    </property>
+    <property name="text">
+     <string>ejemplo@correo.ugr.es</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="correoEnviado">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>770</x>
+      <y>460</y>
+      <width>21</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>✅</string>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
@@ -195,7 +239,7 @@
      <x>0</x>
      <y>0</y>
      <width>1028</width>
-     <height>26</height>
+     <height>24</height>
     </rect>
    </property>
   </widget>

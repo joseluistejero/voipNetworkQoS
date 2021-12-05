@@ -8,8 +8,8 @@
 #Erlang B Calculator
 from math import ceil
 
+#this function returns the probability of not answering a call given the BHC Volume in Erlangs (p) and c the number of phone lines 
 def probability(p,c):
-  #this function returns the probability of not answering a call given the BHC Volume in Erlangs and c the number of phone lines 
   if(p == 0):
     return 0.0
   s= 0.0
@@ -18,8 +18,8 @@ def probability(p,c):
   pc = 1.0/(1.0 + s)
   return pc
 
+#this function returns the number of lines given certain values of p and prob, where p is the BHC Volume in Erlangs and prob the probability of not answering a call 
 def lines(p,prob):
-  #this function returns the number of lines given certain values of p and prob, where p is the BHC Volume in Erlangs and prob the probability of not answering a call 
   l,r = 0,ceil(p)
   fR = probability(p,r)
   while(fR > prob):
