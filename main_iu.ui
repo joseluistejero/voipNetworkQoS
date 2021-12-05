@@ -137,7 +137,7 @@
           <bool>true</bool>
          </property>
          <property name="text">
-          <string>Tiempo medio de llamada</string>
+          <string>Tiempo medio de llamada (min)</string>
          </property>
         </widget>
        </item>
@@ -257,7 +257,7 @@
        <item row="1" column="0">
         <widget class="QLabel" name="label_8">
          <property name="text">
-          <string>Retardo de red</string>
+          <string>Retardo de red (ms)</string>
          </property>
         </widget>
        </item>
@@ -277,7 +277,7 @@
        <item row="2" column="0">
         <widget class="QLabel" name="encapsulacionLabel">
          <property name="text">
-          <string>TcWan</string>
+          <string>Transmisión</string>
          </property>
         </widget>
        </item>
@@ -450,7 +450,7 @@
           <bool>true</bool>
          </property>
          <property name="text">
-          <string>Probabilidad de bloqueo</string>
+          <string>Probabilidad de bloqueo (%)</string>
          </property>
         </widget>
        </item>
@@ -470,7 +470,7 @@
           <bool>true</bool>
          </property>
          <property name="text">
-          <string>Ancho de banda (BWres)</string>
+          <string>Ancho de banda de reserva (%)</string>
          </property>
         </widget>
        </item>
@@ -541,7 +541,7 @@
      <x>0</x>
      <y>0</y>
      <width>838</width>
-     <height>24</height>
+     <height>21</height>
     </rect>
    </property>
   </widget>
