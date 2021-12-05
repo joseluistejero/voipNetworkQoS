@@ -46,7 +46,9 @@ Project is created with:
 ## Contact
 
 Jose Luis Tejero Lopez 	- joseluistejero@correo.ugr.es
+
 Jorge Suárez Díaz 	- jsuadia@correo.ugr.es
+
 Martín Torres Antúnez 	- mtorresantunez@correo.ugr.es
 
 Project Link: [https://github.com/joseluistejero/voipNetworkQoS](https://github.com/joseluistejero/voipNetworkQoS)
