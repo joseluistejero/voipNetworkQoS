@@ -1,68 +1,52 @@
 # voipNetworkQoS
 Get best audio codec for VoIP call.
-# HelloWorldSmartCard
-Tutorial about javacard and smartcard interaction
+
 ## Table of contents
 * [General info](#general-info)
+	* [Prerequisites](#prerequisites)
+	* [Install](#install)
 * [Usage](#usage)
-	* [Smart card applet](#smart-card-applet)
-	* [Smart card client](#smart-card-client)
 * [Technologies](#technologies)
 * [Contact](#contact)
 
 ## General info
-This repository contains two java projects which are basic to understand smartcards. 
+This repository contains a python project designed for customers to get the optimum audio codec for a VoIP service
 	
 ## Prerequisites
-To run this project we use Infineon JavaCard IDE with
-- JRE 1.8.0 (Java Runtime Envirioment )  
-- JCDK 3.0.5 (Java Card Development Kit )  
+To run this project we need Python3.
+It is available on Windows, MACos, and Linux. 
 
 
 ### Install
-1. Clone the repository
+1. Clone the repository or download the ZIP
 ```
-$ git clone https://github.com/joseluistejero/HelloWorldSmartCard
+$ git clone https://github.com/joseluistejero/voipNetworkQoS
 ```
-2. Open both proyects on Java Card IDE 
-
 
 
 <!-- USAGE EXAMPLES -->
 ## Usage
 
-### Smart Card Applet: 
-Contains the .java files of the application that we want to include in our smart card.
+To run the program just execute the file main.py with python3  
 
-First step is building the proyect, this will generete a .cap file. This file found in the folder /bin/getterSetter/javacard/ is the one we need to introduce in the smart card.
-
-For introducing the .cap file in the smart card follow Global Platform Pro tutorial https://github.com/martinpaljak/GlobalPlatformPro 
-
-Basic commands used:
 ```
-$ Install: C:\GlobalPlatformPro\tool\target> .\gp.exe -install .\getterSetter.cap -key <Default key of card> -r 1 -d  -v -i
-$ Uninstall: C:\GlobalPlatformPro\tool\target>  .\gp.exe -f --delete --applet  <AID of proyect applet> -key <Default key of card> -r 1 -d  -v -i
-```
-***INFINEON SECORA IDS KEY:*** 6B188209632A7649016EBF37B8CB518BCE8AE0D13C74C19302BD497BD5C66DAE 
-
-***AID of proyect:*** 9988776655000000
-
-###  Smart Card Client:
-The purpose of this project is to interact with the smartcard by sending bytes through APDU.
-```
-$ Run Java file on src folder: ClienteAppletTestGetterSetter
+$ python3 main.py 
 ```
 
+Once this is done the program should have started
 
 ## Technologies
 Project is created with:
-* JavaCard Development Kit
-* Secora IDS SLJ52GDA110CS
+* Python 3
+* pyQT
+* QTDesigner
 
 
 <!-- CONTACT -->
 ## Contact
 
-Jose Luis Tejero Lopez - JoseLuis.TejeroLopez@infineon.com
+Jose Luis Tejero Lopez 	- joseluistejero@correo.ugr.es
+Jorge Suárez Díaz 	- jsuadia@correo.ugr.es
+Martín Torres Antúnez 	- mtorresantunez@correo.ugr.es
 
-Project Link: [https://github.com/joseluistejero/HelloWorldSmartCard](https://github.com/joseluistejero/HelloWorldSmartCard)
+Project Link: [https://github.com/joseluistejero/voipNetworkQoS](https://github.com/joseluistejero/voipNetworkQoS)
