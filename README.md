@@ -1,5 +1,5 @@
 # voipNetworkQoS
-Get best audio codec for VoIP call.
+Get best audio codec for VoIP call. All documentation about the project is available in the following [file](DocumentationSheet.pdf)
 
 ## Table of contents
 * [General info](#general-info)
