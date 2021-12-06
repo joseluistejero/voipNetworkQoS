@@ -35,9 +35,9 @@ $ python3 main.py
 
 Once this is done the program should have started. 
 
-You can see the video tutorial in the following link or by downloading the directory that contains the tutorial.mp4
+You can see the video tutorial by clicking in the next image or downloading the file [Tutorial](Tutorial%20voipNetworkQoS.mp4)
 
-[<img width="1259" alt="Captura de pantalla 2021-12-06 a las 13 54 48" src="https://user-images.githubusercontent.com/39380561/144849649-f52d1e25-635e-4e31-a637-135fc00ce1a7.png">](https://drive.google.com/file/d/1JkeUESBdngXtd-XhqQilDdB2fEi3S8yh/view?usp=sharing)
+[<img width="1259" alt="Captura de pantalla 2021-12-06 a las 13 54 48" src="https://user-images.githubusercontent.com/39380561/144849649-f52d1e25-635e-4e31-a637-135fc00ce1a7.png">](https://drive.google.com/file/d/1EhAPlbc8ZZEkpxPg19BYinM4ts9ylXab/view?usp=sharing)
 
 
 ## Technologies
